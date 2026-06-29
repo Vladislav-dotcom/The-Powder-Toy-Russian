@@ -267,20 +267,20 @@ void GameController::Install()
 {
 	if constexpr (CAN_INSTALL)
 	{
-		new ConfirmPrompt("Install " + String(APPNAME), "Do you wish to install " + String(APPNAME) + " on this computer?\nThis allows you to open save files and saves directly from the website.", { [] {
+		new ConfirmPrompt("Установить " + String(APPNAME), "Установить " + String(APPNAME) + " на этот компьютер?\nЭто позволит открывать сохранения и файлы сохранений напрямую с сайта.", { [] {
 			if (Platform::Install())
 			{
-				new InformationMessage("Success", "Installation completed", false);
+				new InformationMessage("Готово", "Установка завершена", false);
 			}
 			else
 			{
-				new ErrorMessage("Could not install", "The installation did not complete due to an error");
+				new ErrorMessage("Не удалось установить", "Установка не завершена из-за ошибки");
 			}
 		} });
 	}
 	else
 	{
-		new InformationMessage("No installation necessary", "You don't need to install " + String(APPNAME) + " on this platform", false);
+		new InformationMessage("Установка не требуется", "На этой платформе устанавливать " + String(APPNAME) + " не нужно", false);
 	}
 }
 
@@ -481,12 +481,12 @@ ByteString GameController::StampRegion(ui::Point point1, ui::Point point2, bool 
 		newSave->paused = gameModel->GetPaused();
 		ByteString stampName = Client::Ref().AddStamp(std::move(newSave));
 		if (stampName.length() == 0)
-			new ErrorMessage("Could not create stamp", "Error serializing save file");
+			new ErrorMessage("Не удалось создать штамп", "Ошибка сериализации файла сохранения");
 		return stampName;
 	}
 	else
 	{
-		new ErrorMessage("Could not create stamp", "Error generating save file");
+		new ErrorMessage("Не удалось создать штамп", "Ошибка создания файла сохранения");
 		return "";
 	}
 }
@@ -826,16 +826,16 @@ void GameController::SwitchGravity()
 	switch (gameModel->GetSimulation()->gravityMode)
 	{
 	case GRAV_VERTICAL:
-		gameModel->SetInfoTip("Gravity: Vertical");
+		gameModel->SetInfoTip("Гравитация: вертикальная");
 		break;
 	case GRAV_OFF:
-		gameModel->SetInfoTip("Gravity: Off");
+		gameModel->SetInfoTip("Гравитация: выкл");
 		break;
 	case GRAV_RADIAL:
-		gameModel->SetInfoTip("Gravity: Radial");
+		gameModel->SetInfoTip("Гравитация: радиальная");
 		break;
 	case GRAV_CUSTOM:
-		gameModel->SetInfoTip("Gravity: Custom");
+		gameModel->SetInfoTip("Гравитация: своя");
 		break;
 	}
 }
@@ -847,19 +847,19 @@ void GameController::SwitchAir()
 	switch (gameModel->GetSimulation()->air->airMode)
 	{
 	case AIR_ON:
-		gameModel->SetInfoTip("Air: On");
+		gameModel->SetInfoTip("Воздух: вкл");
 		break;
 	case AIR_PRESSUREOFF:
-		gameModel->SetInfoTip("Air: Pressure Off");
+		gameModel->SetInfoTip("Воздух: без давления");
 		break;
 	case AIR_VELOCITYOFF:
-		gameModel->SetInfoTip("Air: Velocity Off");
+		gameModel->SetInfoTip("Воздух: без скорости");
 		break;
 	case AIR_OFF:
-		gameModel->SetInfoTip("Air: Off");
+		gameModel->SetInfoTip("Воздух: выкл");
 		break;
 	case AIR_NOUPDATE:
-		gameModel->SetInfoTip("Air: No Update");
+		gameModel->SetInfoTip("Воздух: без обновления");
 		break;
 	}
 }
@@ -1097,13 +1097,13 @@ void GameController::SetEdgeMode(int edgeMode)
 	switch (edgeMode)
 	{
 		case EDGE_VOID:
-			gameModel->SetInfoTip("Edge Mode: Void");
+			gameModel->SetInfoTip("Режим границ: пустота");
 			break;
 		case EDGE_SOLID:
-			gameModel->SetInfoTip("Edge Mode: Solid");
+			gameModel->SetInfoTip("Режим границ: твёрдые");
 			break;
 		case EDGE_LOOP:
-			gameModel->SetInfoTip("Edge Mode: Loop");
+			gameModel->SetInfoTip("Режим границ: цикл");
 			break;
 	}
 }
@@ -1235,7 +1235,7 @@ void GameController::OpenSearch(String searchText)
 				}
 				catch(GameModelException & ex)
 				{
-					new ErrorMessage("Cannot open save", ByteString(ex.what()).FromUtf8());
+					new ErrorMessage("Не удалось открыть сохранение", ByteString(ex.what()).FromUtf8());
 				}
 			}
 		});
@@ -1250,7 +1250,7 @@ void GameController::OpenLocalSaveWindow(bool asCurrent)
 	auto gameSave = sim->Save(gameModel->GetIncludePressure() != gameView->ShiftBehaviour(), RES.OriginRect());
 	if(!gameSave)
 	{
-		new ErrorMessage("Error", "Unable to build save.");
+		new ErrorMessage("Ошибка", "Не удалось создать сохранение.");
 	}
 	else
 	{
@@ -1287,11 +1287,11 @@ void GameController::OpenLocalSaveWindow(bool asCurrent)
 			tempSave->SetGameSave(std::move(gameSave));
 			gameModel->SetSaveFile(std::move(tempSave), gameView->ShiftBehaviour());
 			if (saveData.size() == 0)
-				new ErrorMessage("Error", "Unable to serialize game data.");
+				new ErrorMessage("Ошибка", "Не удалось сериализовать данные игры.");
 			else if (!Platform::WriteFile(saveData, gameModel->GetSaveFile()->GetName()))
-				new ErrorMessage("Error", "Unable to write save file.");
+				new ErrorMessage("Ошибка", "Не удалось записать файл сохранения.");
 			else
-				gameModel->SetInfoTip("Saved Successfully");
+				gameModel->SetInfoTip("Сохранено");
 		}
 	}
 }
@@ -1318,7 +1318,7 @@ void GameController::OpenSaveDone()
 		}
 		catch(GameModelException & ex)
 		{
-			new ErrorMessage("Cannot open save", ByteString(ex.what()).FromUtf8());
+			new ErrorMessage("Не удалось открыть сохранение", ByteString(ex.what()).FromUtf8());
 		}
 	}
 }
@@ -1401,7 +1401,7 @@ void GameController::OpenTags()
 	}
 	else
 	{
-		new ErrorMessage("Error", "No save open");
+		new ErrorMessage("Ошибка", "Нет открытого сохранения");
 	}
 }
 
@@ -1412,7 +1412,7 @@ void GameController::OpenStamps()
 		if (file)
 		{
 			if (file->GetError().length())
-				new ErrorMessage("Error loading stamp", file->GetError());
+				new ErrorMessage("Ошибка загрузки штампа", file->GetError());
 			else if (localBrowser->GetMoveToFront())
 				Client::Ref().MoveStampToFront(file->GetDisplayName().ToUtf8());
 			LoadStamp(file->TakeGameSave());
@@ -1460,7 +1460,7 @@ void GameController::OpenSaveWindow()
 		auto gameSave = sim->Save(gameModel->GetIncludePressure() != gameView->ShiftBehaviour(), RES.OriginRect());
 		if(!gameSave)
 		{
-			new ErrorMessage("Error", "Unable to build save.");
+			new ErrorMessage("Ошибка", "Не удалось создать сохранение.");
 		}
 		else
 		{
@@ -1490,7 +1490,7 @@ void GameController::OpenSaveWindow()
 	}
 	else
 	{
-		new ErrorMessage("Error", "You need to login to upload saves.");
+		new ErrorMessage("Ошибка", "Для загрузки сохранений нужно войти в аккаунт.");
 	}
 }
 
@@ -1503,7 +1503,7 @@ void GameController::SaveAsCurrent()
 		auto gameSave = sim->Save(gameModel->GetIncludePressure() != gameView->ShiftBehaviour(), RES.OriginRect());
 		if(!gameSave)
 		{
-			new ErrorMessage("Error", "Unable to build save.");
+			new ErrorMessage("Ошибка", "Не удалось создать сохранение.");
 		}
 		else
 		{
@@ -1529,7 +1529,7 @@ void GameController::SaveAsCurrent()
 	}
 	else
 	{
-		new ErrorMessage("Error", "You need to login to upload saves.");
+		new ErrorMessage("Ошибка", "Для загрузки сохранений нужно войти в аккаунт.");
 	}
 }
 
@@ -1657,55 +1657,55 @@ void GameController::NotifyUpdateAvailable(Client * sender)
 			StringBuilder updateMessage;
 			if (Platform::CanUpdate())
 			{
-				updateMessage << "Are you sure you want to run the updater? Please save any changes before updating.\n\nCurrent version:\n ";
+				updateMessage << "Запустить обновление? Сохраните изменения перед обновлением.\n\nТекущая версия:\n ";
 			}
 			else
 			{
-				updateMessage << "Click \"Continue\" to download the latest version from our website.\n\nCurrent version:\n ";
+				updateMessage << "Нажмите «Продолжить», чтобы скачать последнюю версию с сайта.\n\nТекущая версия:\n ";
 			}
 
 			if constexpr (MOD)
 			{
-				updateMessage << "Mod " << MOD_ID << " ";
+				updateMessage << "Мод " << MOD_ID << " ";
 			}
 			if constexpr (SNAPSHOT)
 			{
-				updateMessage << "Snapshot " << APP_VERSION.build;
+				updateMessage << "Сборка " << APP_VERSION.build;
 			}
 			else if constexpr (BETA)
 			{
-				updateMessage << DISPLAY_VERSION[0] << "." << DISPLAY_VERSION[1] << " Beta, Build " << APP_VERSION.build;
+				updateMessage << DISPLAY_VERSION[0] << "." << DISPLAY_VERSION[1] << " Бета, сборка " << APP_VERSION.build;
 			}
 			else
 			{
-				updateMessage << DISPLAY_VERSION[0] << "." << DISPLAY_VERSION[1] << " Stable, Build " << APP_VERSION.build;
+				updateMessage << DISPLAY_VERSION[0] << "." << DISPLAY_VERSION[1] << " Стабильная, сборка " << APP_VERSION.build;
 			}
 
-			updateMessage << "\nNew version:\n ";
+			updateMessage << "\nНовая версия:\n ";
 			if (info.channel == UpdateInfo::channelBeta)
 			{
-				updateMessage << info.major << "." << info.minor << " Beta, Build " << info.build;
+				updateMessage << info.major << "." << info.minor << " Бета, сборка " << info.build;
 			}
 			else if (info.channel == UpdateInfo::channelSnapshot)
 			{
 				if constexpr (MOD)
 				{
-					updateMessage << "Mod version " << info.build;
+					updateMessage << "Версия мода " << info.build;
 				}
 				else
 				{
-					updateMessage << "Snapshot " << info.build;
+					updateMessage << "Сборка " << info.build;
 				}
 			}
 			else if(info.channel == UpdateInfo::channelStable)
 			{
-				updateMessage << info.major << "." << info.minor << " Stable, Build " << info.build;
+				updateMessage << info.major << "." << info.minor << " Стабильная, сборка " << info.build;
 			}
 
 			if (info.changeLog.length())
-				updateMessage << "\n\nChangelog:\n" << info.changeLog;
+				updateMessage << "\n\nСписок изменений:\n" << info.changeLog;
 
-			new ConfirmPrompt("Run Updater", updateMessage.Build(), { [this, info] { c->RunUpdater(info); } });
+			new ConfirmPrompt("Запуск обновления", updateMessage.Build(), { [this, info] { c->RunUpdater(info); } });
 		}
 	};
 
@@ -1719,18 +1719,18 @@ void GameController::NotifyUpdateAvailable(Client * sender)
 		case UpdateInfo::channelSnapshot:
 			if constexpr (MOD)
 			{
-				gameModel->AddNotification(new UpdateNotification(this, "A new mod update is available - click here to update"));
+				gameModel->AddNotification(new UpdateNotification(this, "Доступно обновление мода — нажмите, чтобы обновить"));
 			}
 			else
 			{
-				gameModel->AddNotification(new UpdateNotification(this, "A new snapshot is available - click here to update"));
+				gameModel->AddNotification(new UpdateNotification(this, "Доступна новая сборка — нажмите, чтобы обновить"));
 			}
 			break;
 		case UpdateInfo::channelStable:
-			gameModel->AddNotification(new UpdateNotification(this, "A new version is available - click here to update"));
+			gameModel->AddNotification(new UpdateNotification(this, "Доступна новая версия — нажмите, чтобы обновить"));
 			break;
 		case UpdateInfo::channelBeta:
-			gameModel->AddNotification(new UpdateNotification(this, "A new beta is available - click here to update"));
+			gameModel->AddNotification(new UpdateNotification(this, "Доступна новая бета — нажмите, чтобы обновить"));
 			break;
 	}
 }

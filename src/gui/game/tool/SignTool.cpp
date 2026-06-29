@@ -58,7 +58,7 @@ SignWindow::SignWindow(SignTool * tool_, Simulation * sim_, int signID_, ui::Poi
 	signID(signID_),
 	signPosition(position_)
 {
-	ui::Label * messageLabel = new ui::Label(ui::Point(4, 5), ui::Point(Size.X-8, 15), "New sign");
+	ui::Label * messageLabel = new ui::Label(ui::Point(4, 5), ui::Point(Size.X-8, 15), "Новая табличка");
 	messageLabel->SetTextColour(style::Colour::InformationTitle);
 	messageLabel->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	messageLabel->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
@@ -83,21 +83,21 @@ SignWindow::SignWindow(SignTool * tool_, Simulation * sim_, int signID_, ui::Poi
 	AddComponent(okayButton);
 	SetOkayButton(okayButton);
 
-	ui::Label * tempLabel = new ui::Label(ui::Point(8, 48), ui::Point(40, 15), "Pointer:");
+	ui::Label * tempLabel = new ui::Label(ui::Point(8, 48), ui::Point(40, 15), "Указатель:");
 	okayButton->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	okayButton->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 	AddComponent(tempLabel);
 
 	justification = new ui::DropDown(ui::Point(52, 48), ui::Point(55, 16));
 	AddComponent(justification);
-	justification->AddOption(std::pair<String, int>(0xE020 + String(" Left"), (int)sign::Left));
-	justification->AddOption(std::pair<String, int>(0xE01E + String(" Middle"), (int)sign::Middle));
-	justification->AddOption(std::pair<String, int>(0xE01F + String(" Right"), (int)sign::Right));
-	justification->AddOption(std::pair<String, int>(0xE01D + String(" None"), (int)sign::None));
+	justification->AddOption(std::pair<String, int>(0xE020 + String(" Слева"), (int)sign::Left));
+	justification->AddOption(std::pair<String, int>(0xE01E + String(" По центру"), (int)sign::Middle));
+	justification->AddOption(std::pair<String, int>(0xE01F + String(" Справа"), (int)sign::Right));
+	justification->AddOption(std::pair<String, int>(0xE01D + String(" Нет"), (int)sign::None));
 	justification->SetOption(1);
 	justification->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 
-	textField = new ui::Textbox(ui::Point(8, 25), ui::Point(Size.X-16, 17), "", "[message]");
+	textField = new ui::Textbox(ui::Point(8, 25), ui::Point(Size.X-16, 17), "", "[сообщение]");
 	textField->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	textField->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 	textField->SetLimit(45);
@@ -113,13 +113,13 @@ SignWindow::SignWindow(SignTool * tool_, Simulation * sim_, int signID_, ui::Poi
 
 	if(signID!=-1)
 	{
-		messageLabel->SetText("Edit sign");
+		messageLabel->SetText("Редактирование таблички");
 
 		textField->SetText(sim->signs[signID].text);
 		justification->SetOption(sim->signs[signID].ju);
 
 		ui::Point position = ui::Point(justification->Position.X+justification->Size.X+3, 48);
-		ui::Button * moveButton = new ui::Button(position, ui::Point(((Size.X-position.X-8)/2)-2, 16), "Move");
+		ui::Button * moveButton = new ui::Button(position, ui::Point(((Size.X-position.X-8)/2)-2, 16), "Переместить");
 		moveButton->SetActionCallback({ [this] {
 			if (signID!=-1)
 			{
@@ -131,7 +131,7 @@ SignWindow::SignWindow(SignTool * tool_, Simulation * sim_, int signID_, ui::Poi
 		AddComponent(moveButton);
 
 		position = ui::Point(justification->Position.X+justification->Size.X+3, 48)+ui::Point(moveButton->Size.X+3, 0);
-		ui::Button * deleteButton = new ui::Button(position, ui::Point((Size.X-position.X-8)-1, 16), "Delete");
+		ui::Button * deleteButton = new ui::Button(position, ui::Point((Size.X-position.X-8)-1, 16), "Удалить");
 		//deleteButton->SetIcon(IconDelete);
 		deleteButton->SetActionCallback({ [this] {
 			CloseActiveWindow();

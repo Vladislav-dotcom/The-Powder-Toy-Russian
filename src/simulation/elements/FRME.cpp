@@ -29,7 +29,7 @@ void Element::Element_FRME()
 	Weight = 100;
 
 	HeatConduct = 0;
-	Description = "Frame, can be used with pistons to push many particles.";
+	Description = "Рама, используется с поршнями для перемещения множества частиц.";
 
 	Properties = TYPE_SOLID;
 

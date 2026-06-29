@@ -30,7 +30,7 @@ void Element::Element_FRZW()
 
 	DefaultProperties.temp = 120.0f;
 	HeatConduct = 29;
-	Description = "Freeze water. Hybrid liquid formed when Freeze powder melts.";
+	Description = "Ледяная вода. Гибридная жидкость при плавлении ледяной пыли.";
 
 	Properties = TYPE_LIQUID | PROP_LIFE_DEC;
 

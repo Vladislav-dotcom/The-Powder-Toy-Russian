@@ -27,7 +27,7 @@ void Element::Element_INSL()
 	Weight = 100;
 
 	HeatConduct = 0;
-	Description = "Insulator. Blocks heat, electricity, and radiation.";
+	Description = "Изолятор. Блокирует тепло, электричество и радиацию.";
 
 	Properties = TYPE_SOLID;
 

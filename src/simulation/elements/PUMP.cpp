@@ -31,7 +31,7 @@ void Element::Element_PUMP()
 
 	DefaultProperties.temp = 273.15f;
 	HeatConduct = 0;
-	Description = "Pressure pump. Changes pressure to its temp when activated. (use HEAT/COOL).";
+	Description = "Насос давления. Меняет давление по температуре при активации. (используйте HEAT/COOL).";
 
 	Properties = TYPE_SOLID;
 

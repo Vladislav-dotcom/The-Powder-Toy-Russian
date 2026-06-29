@@ -29,7 +29,7 @@ void Element::Element_CONV()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Converter. Converts everything into whatever it first touches.";
+	Description = "Конвертер. Превращает всё в первый элемент, с которым соприкоснулся.";
 
 	Properties = TYPE_SOLID | PROP_NOCTYPEDRAW;
 	CarriesTypeIn = (1U << FIELD_CTYPE) | (1U << FIELD_TMP);

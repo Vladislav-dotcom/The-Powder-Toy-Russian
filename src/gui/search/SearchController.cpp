@@ -255,11 +255,11 @@ void SearchController::ClearSelection()
 void SearchController::RemoveSelected()
 {
 	StringBuilder desc;
-	desc << "Are you sure you want to delete " << searchModel->GetSelected().size() << " save";
+	desc << "Вы уверены, что хотите удалить " << searchModel->GetSelected().size() << " сохранений";
 	if(searchModel->GetSelected().size()>1)
-		desc << "s";
+		desc << "";
 	desc << "?";
-	new ConfirmPrompt("Delete saves", desc.Build(), { [this] {
+	new ConfirmPrompt("Удалить сохранения", desc.Build(), { [this] {
 		removeSelectedC();
 	} });
 }
@@ -276,7 +276,7 @@ void SearchController::removeSelectedC()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Deleting save [", saves[i], "] ..."));
+				notifyStatus(String::Build("Удаление сохранения [", saves[i], "] ..."));
 				auto deleteSaveRequest = std::make_unique<http::DeleteSaveRequest>(saves[i]);
 				deleteSaveRequest->Start();
 				deleteSaveRequest->Wait();
@@ -286,7 +286,7 @@ void SearchController::removeSelectedC()
 				}
 				catch (const http::RequestError &ex)
 				{
-					notifyError(String::Build("Failed to delete [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+					notifyError(String::Build("Не удалось удалить [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					c->Refresh();
 					return false;
 				}
@@ -298,7 +298,7 @@ void SearchController::removeSelectedC()
 	};
 
 	std::vector<int> selected = searchModel->GetSelected();
-	new TaskWindow("Removing saves", new RemoveSavesTask(selected, this));
+	new TaskWindow("Удаление сохранений", new RemoveSavesTask(selected, this));
 	ClearSelection();
 	searchModel->UpdateSaveList(searchModel->GetPageNum(), searchModel->GetLastQuery());
 }
@@ -306,11 +306,11 @@ void SearchController::removeSelectedC()
 void SearchController::UnpublishSelected(bool publish)
 {
 	StringBuilder desc;
-	desc << "Are you sure you want to " << (publish ? String("publish ") : String("unpublish ")) << searchModel->GetSelected().size() << " save";
+	desc << "Вы уверены, что хотите " << (publish ? String("опубликовать ") : String("снять ")) << searchModel->GetSelected().size() << " сохранений";
 	if (searchModel->GetSelected().size() > 1)
-		desc << "s";
+		desc << "";
 	desc << "?";
-	new ConfirmPrompt(publish ? String("Publish Saves") : String("Unpublish Saves"), desc.Build(), { [this, publish] {
+	new ConfirmPrompt(publish ? String("Опубликовать сохранения") : String("Снять сохранения"), desc.Build(), { [this, publish] {
 		unpublishSelectedC(publish);
 	} });
 }
@@ -327,7 +327,7 @@ void SearchController::unpublishSelectedC(bool publish)
 
 		void PublishSave(int saveID)
 		{
-			notifyStatus(String::Build("Publishing save [", saveID, "]"));
+			notifyStatus(String::Build("Опубликование сохранения [", saveID, "]"));
 			auto publishSaveRequest = std::make_unique<http::PublishSaveRequest>(saveID);
 			publishSaveRequest->Start();
 			publishSaveRequest->Wait();
@@ -336,7 +336,7 @@ void SearchController::unpublishSelectedC(bool publish)
 
 		void UnpublishSave(int saveID)
 		{
-			notifyStatus(String::Build("Unpublishing save [", saveID, "]"));
+			notifyStatus(String::Build("Снятие сохранения [", saveID, "]"));
 			auto unpublishSaveRequest = std::make_unique<http::UnpublishSaveRequest>(saveID);
 			unpublishSaveRequest->Start();
 			unpublishSaveRequest->Wait();
@@ -362,11 +362,11 @@ void SearchController::unpublishSelectedC(bool publish)
 				{
 					if (publish) // uses html page so error message will be spam
 					{
-						notifyError(String::Build("Failed to publish [", saves[i], "], is this save yours?"));
+						notifyError(String::Build("Не удалось опубликовать [", saves[i], "], это ваше сохранение?"));
 					}
 					else
 					{
-						notifyError(String::Build("Failed to unpublish [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+						notifyError(String::Build("Не удалось снять [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					}
 					c->Refresh();
 					return false;
@@ -379,7 +379,7 @@ void SearchController::unpublishSelectedC(bool publish)
 	};
 
 	std::vector<int> selected = searchModel->GetSelected();
-	new TaskWindow(publish ? String("Publishing Saves") : String("Unpublishing Saves"), new UnpublishSavesTask(selected, this, publish));
+	new TaskWindow(publish ? String("Опубликование сохранений") : String("Снятие сохранений"), new UnpublishSavesTask(selected, this, publish));
 }
 
 void SearchController::FavouriteSelected()
@@ -394,7 +394,7 @@ void SearchController::FavouriteSelected()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Favouring save [", saves[i], "]"));
+				notifyStatus(String::Build("Добавление в избранное [", saves[i], "]"));
 				auto favouriteSaveRequest = std::make_unique<http::FavouriteSaveRequest>(saves[i], true);
 				favouriteSaveRequest->Start();
 				favouriteSaveRequest->Wait();
@@ -404,7 +404,7 @@ void SearchController::FavouriteSelected()
 				}
 				catch (const http::RequestError &ex)
 				{
-					notifyError(String::Build("Failed to favourite [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+					notifyError(String::Build("Не удалось добавить в избранное [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					c->Refresh();
 					return false;
 				}
@@ -425,7 +425,7 @@ void SearchController::FavouriteSelected()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Unfavouring save [", saves[i], "]"));
+				notifyStatus(String::Build("Удаление из избранного [", saves[i], "]"));
 				auto unfavouriteSaveRequest = std::make_unique<http::FavouriteSaveRequest>(saves[i], false);
 				unfavouriteSaveRequest->Start();
 				unfavouriteSaveRequest->Wait();
@@ -435,7 +435,7 @@ void SearchController::FavouriteSelected()
 				}
 				catch (const http::RequestError &ex)
 				{
-					notifyError(String::Build("Failed to unfavourite [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
+					notifyError(String::Build("Не удалось убрать из избранного [", saves[i], "]: ", ByteString(ex.what()).FromAscii()));
 					c->Refresh();
 					return false;
 				}
@@ -448,8 +448,8 @@ void SearchController::FavouriteSelected()
 
 	std::vector<int> selected = searchModel->GetSelected();
 	if (!searchModel->GetShowFavourite())
-		new TaskWindow("Favouring saves", new FavouriteSavesTask(selected, this));
+		new TaskWindow("Добавление в избранное", new FavouriteSavesTask(selected, this));
 	else
-		new TaskWindow("Unfavouring saves", new UnfavouriteSavesTask(selected, this));
+		new TaskWindow("Удаление из избранного", new UnfavouriteSavesTask(selected, this));
 	ClearSelection();
 }

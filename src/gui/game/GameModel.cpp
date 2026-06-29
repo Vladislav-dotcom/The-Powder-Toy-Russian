@@ -670,7 +670,7 @@ void GameModel::Tick()
 		}
 		catch (const http::RequestError &ex)
 		{
-			new ErrorMessage("Error while voting", ByteString(ex.what()).FromUtf8());
+			new ErrorMessage("Ошибка при голосовании", ByteString(ex.what()).FromUtf8());
 		}
 		currentSave.execVoteRequest.reset();
 	}
@@ -1904,13 +1904,13 @@ void GameModel::InitTools()
 	{
 		AllocTool(std::make_unique<SimTool>(tool));
 	}
-	AllocTool(std::make_unique<DecorationTool>(view, DECO_ADD     , "ADD" , "Colour blending: Add."                         , 0x000000_rgb, "DEFAULT_DECOR_ADD" ));
-	AllocTool(std::make_unique<DecorationTool>(view, DECO_SUBTRACT, "SUB" , "Colour blending: Subtract."                    , 0x000000_rgb, "DEFAULT_DECOR_SUB" ));
-	AllocTool(std::make_unique<DecorationTool>(view, DECO_MULTIPLY, "MUL" , "Colour blending: Multiply."                    , 0x000000_rgb, "DEFAULT_DECOR_MUL" ));
-	AllocTool(std::make_unique<DecorationTool>(view, DECO_DIVIDE  , "DIV" , "Colour blending: Divide."                      , 0x000000_rgb, "DEFAULT_DECOR_DIV" ));
-	AllocTool(std::make_unique<DecorationTool>(view, DECO_SMUDGE  , "SMDG", "Smudge tool, blends surrounding deco together.", 0x000000_rgb, "DEFAULT_DECOR_SMDG"));
-	AllocTool(std::make_unique<DecorationTool>(view, DECO_CLEAR   , "CLR" , "Erase any set decoration."                     , 0x000000_rgb, "DEFAULT_DECOR_CLR" ));
-	AllocTool(std::make_unique<DecorationTool>(view, DECO_DRAW    , "SET" , "Draw decoration (No blending)."                , 0x000000_rgb, "DEFAULT_DECOR_SET" ));
+	AllocTool(std::make_unique<DecorationTool>(view, DECO_ADD     , "ADD" , "Смешивание цвета: сложение."                         , 0x000000_rgb, "DEFAULT_DECOR_ADD" ));
+	AllocTool(std::make_unique<DecorationTool>(view, DECO_SUBTRACT, "SUB" , "Смешивание цвета: вычитание."                    , 0x000000_rgb, "DEFAULT_DECOR_SUB" ));
+	AllocTool(std::make_unique<DecorationTool>(view, DECO_MULTIPLY, "MUL" , "Смешивание цвета: умножение."                    , 0x000000_rgb, "DEFAULT_DECOR_MUL" ));
+	AllocTool(std::make_unique<DecorationTool>(view, DECO_DIVIDE  , "DIV" , "Смешивание цвета: деление."                      , 0x000000_rgb, "DEFAULT_DECOR_DIV" ));
+	AllocTool(std::make_unique<DecorationTool>(view, DECO_SMUDGE  , "SMDG", "Размазывание, смешивает окружающий декор."        , 0x000000_rgb, "DEFAULT_DECOR_SMDG"));
+	AllocTool(std::make_unique<DecorationTool>(view, DECO_CLEAR   , "CLR" , "Стирает установленный декор."                     , 0x000000_rgb, "DEFAULT_DECOR_CLR" ));
+	AllocTool(std::make_unique<DecorationTool>(view, DECO_DRAW    , "SET" , "Рисует декор (без смешивания)."                , 0x000000_rgb, "DEFAULT_DECOR_SET" ));
 	AllocTool(std::make_unique<PropertyTool>(*this));
 	AllocTool(std::make_unique<SignTool>(*this));
 	AllocTool(std::make_unique<SampleTool>(*this));

@@ -29,7 +29,7 @@ void Element::Element_SHLD4()
 	Weight = 100;
 
 	HeatConduct = 0;
-	Description = "Shield lvl 4.";
+	Description = "Щит ур. 4.";
 
 	Properties = TYPE_SOLID|PROP_LIFE_DEC;
 

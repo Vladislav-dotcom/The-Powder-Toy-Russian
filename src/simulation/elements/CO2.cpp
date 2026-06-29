@@ -29,7 +29,7 @@ void Element::Element_CO2()
 	Weight = 1;
 
 	HeatConduct = 88;
-	Description = "Carbon Dioxide. Heavy gas, drifts downwards. Carbonates water and turns to dry ice when cold.";
+	Description = "Диоксид углерода. Тяжёлый газ, опускается вниз. Карбонизирует воду и превращается в сухой лёд при холоде.";
 
 	Properties = TYPE_GAS;
 

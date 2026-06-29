@@ -32,7 +32,7 @@ void Element::Element_TUNG()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Tungsten. Brittle metal with a very high melting point.";
+	Description = "Вольфрам. Хрупкий металл с очень высокой температурой плавления.";
 
 	Properties = TYPE_SOLID|PROP_CONDUCTS|PROP_LIFE_DEC;
 

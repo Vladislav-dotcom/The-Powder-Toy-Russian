@@ -35,7 +35,7 @@ void Element::Element_SPRK()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Electricity. The basis of all electronics in TPT, travels along conductive elements.";
+	Description = "Электричество. Основа всей электроники в TPT, движется по проводникам.";
 
 	Properties = TYPE_SOLID|PROP_LIFE_DEC;
 	CarriesTypeIn = 1U << FIELD_CTYPE;

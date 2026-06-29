@@ -678,7 +678,7 @@ void GameSave::readOPS(const std::vector<char> &data)
 			sign tempSign("", 0, 0, sign::Left);
 			if (auto *text = getIfType(signNode, "text", Bson::Type::stringValue))
 			{
-				tempSign.text = format::CleanString(text->As<ByteString>().FromUtf8(), true, true, true).Substr(0, 45);
+				tempSign.text = format::CleanString(text->As<ByteString>().FromUtf8(), false, true, true).Substr(0, 45);
 				if (version < Version(94, 2))
 				{
 					if (tempSign.text == "{t}")
@@ -1943,7 +1943,7 @@ void GameSave::readPSv(const std::vector<char> &dataVec)
 			tempSignText[l] = 0;
 			p += l;
 		}
-		tempSign.text = format::CleanString(ByteString(tempSignText).FromUtf8(), true, true, true).Substr(0, 45);
+		tempSign.text = format::CleanString(ByteString(tempSignText).FromUtf8(), false, true, true).Substr(0, 45);
 		if (tempSign.text == "{t}")
 		{
 			tempSign.text = "Temp: {t}";

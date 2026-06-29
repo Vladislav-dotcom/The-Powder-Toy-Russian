@@ -29,7 +29,7 @@ void Element::Element_MERC()
 	Weight = 91;
 
 	HeatConduct = 251;
-	Description = "Mercury. Volume changes with temperature, Conductive.";
+	Description = "Ртуть. Объём меняется с температурой, проводит.";
 
 	Properties = TYPE_LIQUID|PROP_CONDUCTS|PROP_NEUTABSORB|PROP_LIFE_DEC;
 

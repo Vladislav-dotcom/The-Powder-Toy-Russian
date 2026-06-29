@@ -32,7 +32,7 @@ void Element::Element_STOR()
 	Weight = 100;
 
 	HeatConduct = 0;
-	Description = "Storage. Captures and stores a single particle. Releases when charged with PSCN, also passes to PIPE.";
+	Description = "Хранилище. Захватывает и хранит одну частицу. Выбрасывает при заряде PSCN, также передаёт в PIPE.";
 
 	Properties = TYPE_SOLID | PROP_NOCTYPEDRAW;
 	CarriesTypeIn = (1U << FIELD_CTYPE) | (1U << FIELD_TMP);

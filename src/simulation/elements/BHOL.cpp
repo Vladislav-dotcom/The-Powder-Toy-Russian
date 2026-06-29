@@ -28,7 +28,7 @@ void Element::Element_BHOL()
 
 	DefaultProperties.temp = R_TEMP + 70.0f + 273.15f;
 	HeatConduct = 255;
-	Description = "Vacuum, sucks in other particles and heats up.";
+	Description = "Вакуум, засасывает частицы и нагревается.";
 
 	Properties = TYPE_SOLID;
 

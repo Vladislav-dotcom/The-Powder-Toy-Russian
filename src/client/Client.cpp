@@ -321,13 +321,13 @@ void Client::RenameStamp(ByteString stampID, ByteString newName)
 
 	if (Platform::FileExists(newPath))
 	{
-		new ErrorMessage("Error renaming stamp", "A stamp with this name already exists.");
+		new ErrorMessage("Ошибка переименования штампа", "Штамп с таким именем уже существует.");
 		return;
 	}
 
 	if (!Platform::RenameFile(oldPath, newPath, false))
 	{
-		new ErrorMessage("Error renaming stamp", "Could not rename the stamp.");
+		new ErrorMessage("Ошибка переименования штампа", "Не удалось переименовать штамп.");
 		return;
 	}
 

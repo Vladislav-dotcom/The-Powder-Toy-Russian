@@ -30,7 +30,7 @@ void Element::Element_LCRY()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Liquid Crystal. Changes colour when charged. (PSCN Charges, NSCN Discharges)";
+	Description = "Жидкий кристалл. Меняет цвет при заряде. (PSCN заряжает, NSCN разряжает)";
 
 	Properties = TYPE_SOLID;
 

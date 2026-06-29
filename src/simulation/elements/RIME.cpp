@@ -30,7 +30,7 @@ void Element::Element_RIME()
 
 	DefaultProperties.temp = -30.0f + 273.15f;
 	HeatConduct = 100;
-	Description = "Solid, created when steam cools rapidly and goes through deposition, skipping the liquid phase.";
+	Description = "Твёрдое, образуется при быстром охлаждении пара с прямым переходом в твёрдое состояние.";
 
 	Properties = TYPE_SOLID;
 	CarriesTypeIn = 1U << FIELD_CTYPE;

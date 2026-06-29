@@ -31,7 +31,7 @@ void Element::Element_BASE()
 
 	HeatConduct = 31;
 	HeatCapacity = 1.5f;
-	Description = "Corrosive liquid. Rusts conductive solids, neutralizes acid.";
+	Description = "Коррозивная жидкость. Ржавит проводящие твёрдые вещества, нейтрализует кислоту.";
 
 	Properties = TYPE_LIQUID|PROP_DEADLY;
 

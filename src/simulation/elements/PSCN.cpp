@@ -28,7 +28,7 @@ void Element::Element_PSCN()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "P-Type Silicon, Will transfer current to any conductor. Enables powered materials.";
+	Description = "Кремний P-типа, передаёт ток любому проводнику. Включает питаемые материалы.";
 
 	Properties = TYPE_SOLID|PROP_CONDUCTS|PROP_LIFE_DEC;
 

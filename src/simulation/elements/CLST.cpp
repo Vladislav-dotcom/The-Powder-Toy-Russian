@@ -31,7 +31,7 @@ void Element::Element_CLST()
 	Weight = 55;
 
 	HeatConduct = 70;
-	Description = "Clay dust. Produces paste when mixed with water.";
+	Description = "Глиновая пыль. При смешивании с водой образует пасту.";
 
 	Properties = TYPE_PART;
 

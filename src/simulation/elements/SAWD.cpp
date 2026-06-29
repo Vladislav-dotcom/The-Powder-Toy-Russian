@@ -27,7 +27,7 @@ void Element::Element_SAWD()
 	Weight = 18;
 
 	HeatConduct = 70;
-	Description = "Sawdust. Floats on water.";
+	Description = "Опилки. Плавают на воде.";
 
 	Properties = TYPE_PART | PROP_NEUTPASS;
 

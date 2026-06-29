@@ -77,13 +77,13 @@ static int beginMessageBox(lua_State *L)
 static int beginThrowError(lua_State *L)
 {
 	GetLSI()->AssertInterfaceEvent();
-	auto errorMessage = PickIfType(L, 1, String("Error text"));
+	auto errorMessage = PickIfType(L, 1, String("Текст ошибки"));
 	auto cb = std::make_shared<LuaSmartRef>(); // * Bind to main lua state (might be different from L).
 	if (lua_gettop(L))
 	{
 		cb->Assign(L, lua_gettop(L));
 	}
-	new ErrorMessage("Error", errorMessage, { [cb]() {
+	new ErrorMessage("Ошибка", errorMessage, { [cb]() {
 		auto *lsi = GetLSI();
 		auto L = lsi->L;
 		cb->Push(L);

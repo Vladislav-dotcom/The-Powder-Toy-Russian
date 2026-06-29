@@ -31,7 +31,7 @@ void Element::Element_PBCN()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Powered breakable clone.";
+	Description = "Питаемый разрушаемый клон.";
 
 	Properties = TYPE_SOLID | PROP_PHOTPASS | PROP_NOCTYPEDRAW;
 	CarriesTypeIn = 1U << FIELD_CTYPE;

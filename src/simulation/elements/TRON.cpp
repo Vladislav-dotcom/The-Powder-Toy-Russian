@@ -35,7 +35,7 @@ void Element::Element_TRON()
 
 	DefaultProperties.temp = 0.0f;
 	HeatConduct = 40;
-	Description = "Smart particles, Travels in straight lines and avoids obstacles. Grows with time.";
+	Description = "Умные частицы, движутся прямо и избегают препятствий. Растут со временем.";
 
 	Properties = TYPE_SOLID|PROP_LIFE_DEC|PROP_LIFE_KILL;
 

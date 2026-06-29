@@ -86,10 +86,10 @@ void LargeScreenDialog()
 {
 	StringBuilder message;
 	auto scale = ui::Engine::Ref().windowFrameOps.scale;
-	message << "Switching to " << scale << "x size mode since your screen was determined to be large enough: ";
-	message << desktopWidth << "x" << desktopHeight << " detected, " << WINDOWW * scale << "x" << WINDOWH * scale << " required";
-	message << "\nTo undo this, hit Cancel. You can change this in settings at any time.";
-	new ConfirmPrompt("Large screen detected", message.Build(), { nullptr, []() {
+	message << "Переключение в режим размера " << scale << "x, так как экран достаточно большой: ";
+	message << "обнаружено " << desktopWidth << "x" << desktopHeight << ", требуется " << WINDOWW * scale << "x" << WINDOWH * scale;
+	message << "\nДля отмены нажмите «Отмена». Это можно изменить в настройках.";
+	new ConfirmPrompt("Обнаружен большой экран", message.Build(), { nullptr, []() {
 		GlobalPrefs::Ref().Set("Scale", 1);
 		ui::Engine::Ref().windowFrameOps.scale = 1;
 	} });
@@ -516,7 +516,7 @@ int Main(int argc, char *argv[])
 				std::vector<char> gameSaveData;
 				if (!Platform::ReadFile(gameSaveData, openArg.value()))
 				{
-					new ErrorMessage("Error", "Could not read file");
+					new ErrorMessage("Ошибка", "Не удалось прочитать файл");
 				}
 				else
 				{
@@ -529,12 +529,12 @@ int Main(int argc, char *argv[])
 			}
 			catch (std::exception & e)
 			{
-				new ErrorMessage("Error", "Could not open save file:\n" + ByteString(e.what()).FromUtf8()) ;
+				new ErrorMessage("Ошибка", "Не удалось открыть файл сохранения:\n" + ByteString(e.what()).FromUtf8()) ;
 			}
 		}
 		else
 		{
-			new ErrorMessage("Error", "Could not open file");
+			new ErrorMessage("Ошибка", "Не удалось открыть файл");
 		}
 	}
 
@@ -577,7 +577,7 @@ int Main(int argc, char *argv[])
 		}
 		catch (std::exception & e)
 		{
-			new ErrorMessage("Error", ByteString(e.what()).FromUtf8());
+			new ErrorMessage("Ошибка", ByteString(e.what()).FromUtf8());
 			Platform::MarkPresentable();
 		}
 	}

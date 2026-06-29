@@ -27,7 +27,7 @@ void Element::Element_CNCT()
 	Weight = 55;
 
 	HeatConduct = 100;
-	Description = "Concrete. Can stack on itself or ROCK, collapses with pressure.";
+	Description = "Бетон. Может наслаиваться на себя или ROCK, разрушается под давлением.";
 
 	Properties = TYPE_PART|PROP_HOT_GLOW;
 

@@ -28,7 +28,7 @@ void Element::Element_NICE()
 
 	DefaultProperties.temp = 35.0f;
 	HeatConduct = 46;
-	Description = "Nitrogen Ice. Very cold, will melt into LN2 when heated only slightly.";
+	Description = "Азотный лёд. Очень холодный, при лёгком нагреве превращается в LN2.";
 
 	Properties = TYPE_SOLID;
 

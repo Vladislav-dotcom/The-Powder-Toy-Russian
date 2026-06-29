@@ -30,7 +30,7 @@ void Element::Element_PQRT()
 	Weight = 90;
 
 	HeatConduct = 3;
-	Description = "Powdered quartz, broken form of QRTZ.";
+	Description = "Кварцовая пыль, разрушенная форма QRTZ.";
 
 	Properties = TYPE_PART | PROP_PHOTPASS | PROP_HOT_GLOW;
 

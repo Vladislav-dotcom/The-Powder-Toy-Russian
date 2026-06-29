@@ -29,13 +29,13 @@ private:
 		auto &prefs = GlobalPrefs::Ref();
 
 		auto niceNotifyError = [this](String error) {
-			notifyError("Downloaded update is corrupted\n" + error);
+			notifyError("Загруженное обновление повреждено\n" + error);
 			return false;
 		};
 
 		auto request = std::make_unique<http::Request>(updateName);
 		request->Start();
-		notifyStatus("Downloading update");
+		notifyStatus("Загрузка обновления");
 		notifyProgress(-1);
 		while(!request->CheckDone())
 		{
@@ -60,29 +60,29 @@ private:
 		}
 		catch (const http::RequestError &ex)
 		{
-			return niceNotifyError("Could not download update: " + String::Build("Server responded with Status ", ByteString(ex.what()).FromAscii()));
+			return niceNotifyError("Не удалось загрузить обновление: " + String::Build("Сервер ответил со статусом ", ByteString(ex.what()).FromAscii()));
 		}
 		if (status!=200)
 		{
-			return niceNotifyError("Could not download update: " + String::Build("Server responded with Status ", status));
+			return niceNotifyError("Не удалось загрузить обновление: " + String::Build("Сервер ответил со статусом ", status));
 		}
 		if (!data.size())
 		{
-			return niceNotifyError("Server did not return any data");
+			return niceNotifyError("Сервер не вернул данных");
 		}
 
-		notifyStatus("Unpacking update");
+		notifyStatus("Распаковка обновления");
 		notifyProgress(-1);
 
 		unsigned int uncompressedLength;
 
 		if(data.size()<16)
 		{
-			return niceNotifyError(String::Build("Unsufficient data, got ", data.size(), " bytes"));
+			return niceNotifyError(String::Build("Недостаточно данных, получено ", data.size(), " байт"));
 		}
 		if (data[0]!=0x42 || data[1]!=0x75 || data[2]!=0x54 || data[3]!=0x54)
 		{
-			return niceNotifyError("Invalid update format");
+			return niceNotifyError("Неверный формат обновления");
 		}
 
 		uncompressedLength  = (unsigned char)data[4];
@@ -96,10 +96,10 @@ private:
 		dstate = BZ2_bzBuffToBuffDecompress(res.data(), (unsigned *)&uncompressedLength, &data[8], data.size()-8, 0, 0);
 		if (dstate)
 		{
-			return niceNotifyError(String::Build("Unable to decompress update: ", dstate));
+			return niceNotifyError(String::Build("Не удалось распаковать обновление: ", dstate));
 		}
 
-		notifyStatus("Applying update");
+		notifyStatus("Применение обновления");
 		notifyProgress(-1);
 
 		prefs.Set("version.update", true);
@@ -107,7 +107,7 @@ private:
 		{
 			prefs.Set("version.update", false);
 			Platform::UpdateCleanup();
-			notifyError("Update failed - try downloading a new version.");
+			notifyError("Обновление не удалось — попробуйте скачать новую версию.");
 			return false;
 		}
 
@@ -118,7 +118,7 @@ private:
 UpdateActivity::UpdateActivity(UpdateInfo info)
 {
 	updateDownloadTask = new UpdateDownloadTask(info.file, this);
-	updateWindow = new TaskWindow("Downloading update...", updateDownloadTask, true);
+	updateWindow = new TaskWindow("Загрузка обновления...", updateDownloadTask, true);
 }
 
 void UpdateActivity::NotifyDone(Task * sender)
@@ -141,14 +141,14 @@ void UpdateActivity::NotifyError(Task * sender)
 	StringBuilder sb;
 	if constexpr (USE_UPDATESERVER)
 	{
-		sb << "Please go online to manually download a newer version.\n";
+		sb << "Подключитесь к интернету и скачайте новую версию вручную.\n";
 	}
 	else
 	{
-		sb << "Please visit the website to download a newer version.\n";
+		sb << "Перейдите на сайт, чтобы скачать новую версию.\n";
 	}
-	sb << "Error: " << sender->GetError();
-	new ConfirmPrompt("Autoupdate failed", sb.Build(), { [this] {
+	sb << "Ошибка: " << sender->GetError();
+	new ConfirmPrompt("Автообновление не удалось", sb.Build(), { [this] {
 		if constexpr (!USE_UPDATESERVER)
 		{
 			Platform::OpenURI(ByteString::Build(SERVER, "/Download.html"));

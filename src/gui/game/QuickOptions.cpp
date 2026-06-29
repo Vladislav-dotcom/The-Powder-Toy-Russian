@@ -6,7 +6,7 @@
 #include "simulation/Simulation.h"
 
 SandEffectOption::SandEffectOption(GameModel * m):
-QuickOption("P", "Sand effect", m, Toggle)
+QuickOption("P", "Эффект песка", m, Toggle)
 {
 
 }
@@ -22,7 +22,7 @@ void SandEffectOption::perform()
 
 
 DrawGravOption::DrawGravOption(GameModel * m):
-QuickOption("G", "Draw gravity field \bg(ctrl+g)", m, Toggle)
+QuickOption("G", "Поле гравитации \bg(Ctrl+G)", m, Toggle)
 {
 
 }
@@ -38,7 +38,7 @@ void DrawGravOption::perform()
 
 
 DecorationsOption::DecorationsOption(GameModel * m):
-QuickOption("D", "Draw decorations \bg(ctrl+b)", m, Toggle)
+QuickOption("D", "Декорации \bg(Ctrl+B)", m, Toggle)
 {
 
 }
@@ -54,7 +54,7 @@ void DecorationsOption::perform()
 
 
 NGravityOption::NGravityOption(GameModel * m):
-QuickOption("N", "Newtonian Gravity \bg(n)", m, Toggle)
+QuickOption("N", "Ньютоновская гравитация \bg(N)", m, Toggle)
 {
 
 }
@@ -70,7 +70,7 @@ void NGravityOption::perform()
 
 
 AHeatOption::AHeatOption(GameModel * m):
-QuickOption("A", "Ambient heat \bg(u)", m, Toggle)
+QuickOption("A", "Окружающее тепло \bg(U)", m, Toggle)
 {
 
 }
@@ -86,7 +86,7 @@ void AHeatOption::perform()
 
 
 ConsoleShowOption::ConsoleShowOption(GameModel * m, GameController * c_):
-QuickOption("C", "Show Console \bg(~)", m, Toggle)
+QuickOption("C", "Консоль \bg(~)", m, Toggle)
 {
 	c = c_;
 }

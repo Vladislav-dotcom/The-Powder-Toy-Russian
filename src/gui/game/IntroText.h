@@ -42,39 +42,39 @@ inline ByteString VersionInfo()
 inline ByteString IntroText()
 {
 	ByteStringBuilder sb;
-	sb << "\bl\bU" << APPNAME << "\bU - Version " << DISPLAY_VERSION[0] << "." << DISPLAY_VERSION[1] << " - https://powdertoy.co.uk, irc.libera.chat #powder, https://tpt.io/discord\n"
+	sb << "\bl\bU" << APPNAME << "\bU - Версия " << DISPLAY_VERSION[0] << "." << DISPLAY_VERSION[1] << " - https://powdertoy.co.uk, irc.libera.chat #powder, https://tpt.io/discord\n"
 	      "\n"
 	      "\n"
-	      "\bgPress \bo'F1'\bg to show or hide this text.\n"
+	      "\bgНажмите \bo'F1'\bg, чтобы показать или скрыть этот текст.\n"
 	      "\n"
-	      "\bgTo choose a material, hover over one of the icons on the right, it will show a selection of elements in that group.\n"
-	      "Pick your material from the menu using \bomouse left/right\bg buttons.\n"
-	      "Draw freeform lines by dragging your mouse left/right button across the drawing area.\n"
+	      "\bgЧтобы выбрать материал, наведите курсор на значок справа — откроется группа элементов.\n"
+	      "Выберите материал в меню \boЛКМ/ПКМ\bg.\n"
+	      "Рисуйте линии, перетаскивая \boЛКМ/ПКМ\bg по области рисования.\n"
 	      "\n"
-	      "Use the \bomouse scroll wheel\bg, or \bo'['\bg and \bo']'\bg, to change the tool size for particles. Press \boTab\bg to change the brush shape.\n"
-	      "\boMiddle click\bg or \boAlt+click\bg to \"sample\" the particles.\n"
-	      "\boCtrl+C/V/X\bg are copy, paste and cut respectively.\n"
-	      "When pasting, use \bo'R'\bg to rotate, \boShift+R\bg and \boShift+Ctrl+R\bg to mirror vertically or horizontally.\n"
-	      "\boShift+drag\bg will create straight lines of particles. \boShift+Alt+drag\bg for horizontal, vertical and diagonal lines.\n"
-	      "\boCtrl+drag\bg will result in filled rectangles. \boCtrl+Alt+drag\bg for filled squares. \boCtrl+Shift+click\bg will flood-fill a closed area.\n"
+	      "Колёсико мыши или \bo'['\bg и \bo']'\bg меняют размер кисти. \boTab\bg — форма кисти.\n"
+	      "\boСредняя кнопка\bg или \boAlt+клик\bg — взять образец частиц.\n"
+	      "\boCtrl+C/V/X\bg — копировать, вставить и вырезать.\n"
+	      "При вставке: \bo'R'\bg — поворот, \boShift+R\bg и \boShift+Ctrl+R\bg — отражение по вертикали и горизонтали.\n"
+	      "\boShift+перетаскивание\bg — прямые линии. \boShift+Alt+перетаскивание\bg — горизонталь, вертикаль и диагональ.\n"
+	      "\boCtrl+перетаскивание\bg — залитые прямоугольники. \boCtrl+Alt+перетаскивание\bg — квадраты. \boCtrl+Shift+клик\bg — заливка замкнутой области.\n"
 	      "\n"
-	      "\boSpacebar\bg can be used to pause physics. Use \bo'F'\bg to step ahead by one frame, \bo'F5'\bg to reload simulation.\n"
-	      "\boCtrl+Z\bg will act as undo, \boCtrl+Y\bg or \boCtrl+Shift+Z\bg as redo.\n"
-	      "Use \bo'S'\bg to save parts of the window as 'stamps'. \bo'L'\bg loads the most recent stamp, \bo'K'\bg shows a library of stamps you saved.\n"
+	      "\boПробел\bg — пауза симуляции. \bo'F'\bg — один кадр вперёд, \bo'F5'\bg — перезагрузка симуляции.\n"
+	      "\boCtrl+Z\bg — отмена, \boCtrl+Y\bg или \boCtrl+Shift+Z\bg — повтор.\n"
+	      " \bo'S'\bg — сохранить область как штамп. \bo'L'\bg — последний штамп, \bo'K'\bg — библиотека штампов.\n"
 	      "\n"
-	      "Use \bo0-9\bg to select a view mode.\n"
-	      "Use \bo'H'\bg to toggle the HUD. Use \bo'D'\bg to toggle debug mode in the HUD.\n"
-	      "Use \bo'Z'\bg for a zoom tool. Click to make the drawable zoom window stay around. Use the wheel to change the zoom strength.\n"
-	      "Use \boCtrl+F\bg to highlight a selected element on the screen.\n"
+	      "\bo0-9\bg — режим отображения.\n"
+	      "\bo'H'\bg — HUD вкл/выкл. \bo'D'\bg — отладка в HUD.\n"
+	      "\bo'Z'\bg — инструмент масштаба. Клик закрепляет окно лупы. Колёсико меняет силу масштаба.\n"
+	      "\boCtrl+F\bg — подсветить выбранный элемент на экране.\n"
 	      "\n";
 	if constexpr (BETA)
 	{
-		sb << "\brThis is a BETA, you cannot save things publicly, nor open local saves and stamps made with it in older versions.\n"
-		      "\brIf you are planning on publishing any saves, use the release version.\n";
+		sb << "\brЭто БЕТА: нельзя публиковать сохранения и открывать локальные сохранения и штампы из неё в старых версиях.\n"
+		      "\brДля публикации сохранений используйте релизную версию.\n";
 	}
 	else
 	{
-		sb << "\bgTo use online features such as saving, you need to register at: \br" << SERVER << "/Register.html\n";
+		sb << "\bgДля онлайн-функций, в том числе сохранения, зарегистрируйтесь: \br" << SERVER << "/Register.html\n";
 	}
 	sb << "\n\bt" << VersionInfo();
 	return sb.Build();

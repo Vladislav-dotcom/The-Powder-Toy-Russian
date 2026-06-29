@@ -30,7 +30,7 @@ void Element::Element_ACEL()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Accelerator, speeds up nearby elements.";
+	Description = "Ускоритель, ускоряет ближайшие элементы.";
 
 	Properties = TYPE_SOLID;
 

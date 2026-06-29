@@ -81,13 +81,13 @@ String sign::getDisplayText(const RenderableSimulation *sim, int &x0, int &y0, i
 					}
 					else if (between_curlies == "type")
 					{
-						formatted_text << (part ? sd.BasicParticleInfo(*part) : (formatted_text.Size() ? String::Build("empty") : String::Build("Empty")));
+						formatted_text << (part ? sd.BasicParticleInfo(*part) : (formatted_text.Size() ? String::Build("пусто") : String::Build("Пусто")));
 						if (v95)
 							*v95 = true;
 					}
 					else if (between_curlies == "ctype")
 					{
-						formatted_text << (part ? (sd.IsElementOrNone(part->ctype) ? sd.ElementResolve(part->ctype, -1) : String::Build(part->ctype)) : (formatted_text.Size() ? String::Build("empty") : String::Build("Empty")));
+						formatted_text << (part ? (sd.IsElementOrNone(part->ctype) ? sd.ElementResolve(part->ctype, -1) : String::Build(part->ctype)) : (formatted_text.Size() ? String::Build("пусто") : String::Build("Пусто")));
 						if (v95)
 							*v95 = true;
 					}

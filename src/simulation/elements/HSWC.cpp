@@ -30,7 +30,7 @@ void Element::Element_HSWC()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Heat switch. Conducts heat only when activated.";
+	Description = "Тепловой выключатель. Проводит тепло только при активации.";
 
 	Properties = TYPE_SOLID;
 

@@ -31,7 +31,7 @@ void Element::Element_URAN()
 
 	DefaultProperties.temp = R_TEMP + 30.0f + 273.15f;
 	HeatConduct = 251;
-	Description = "Uranium. Heavy particles. Generates heat under pressure.";
+	Description = "Уран. Тяжёлые частицы. Генерирует тепло под давлением.";
 
 	Properties = TYPE_PART | PROP_RADIOACTIVE;
 

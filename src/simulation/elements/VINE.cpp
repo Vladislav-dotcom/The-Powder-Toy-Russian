@@ -31,7 +31,7 @@ void Element::Element_VINE()
 	Weight = 100;
 
 	HeatConduct = 65;
-	Description = "Vine, can grow along WOOD.";
+	Description = "Лоза, может расти вдоль WOOD.";
 
 	Properties = TYPE_SOLID;
 

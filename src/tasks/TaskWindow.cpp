@@ -49,7 +49,7 @@ void TaskWindow::NotifyStatus(Task * task)
 
 void TaskWindow::NotifyError(Task * task)
 {
-	new ErrorMessage("Error", task->GetError());
+	new ErrorMessage("Ошибка", task->GetError());
 	done = true;
 }
 

@@ -65,14 +65,14 @@ public:
 		auto * tempSeparator = new ui::Separator(ui::Point(0, 22), ui::Point(Size.X, 1));
 		AddComponent(tempSeparator);
 
-		labelValues = new ui::Label(ui::Point(0, (radius * 5 / 2) + 37), ui::Point(Size.X, 16), String::Build(Format::Precision(1), "X:", x, " Y:", y, " Total:", std::hypot(x, y)));
+		labelValues = new ui::Label(ui::Point(0, (radius * 5 / 2) + 37), ui::Point(Size.X, 16), String::Build(Format::Precision(1), "X:", x, " Y:", y, " Итого:", std::hypot(x, y)));
 		labelValues->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
 		labelValues->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 		AddComponent(labelValues);
 
 		direction->SetValues(x, y);
 		direction->SetUpdateCallback([this](float x, float y) {
-			labelValues->SetText(String::Build(Format::Precision(1), "X:", x, " Y:", y, " Total:", std::hypot(x, y)));
+			labelValues->SetText(String::Build(Format::Precision(1), "X:", x, " Y:", y, " Итого:", std::hypot(x, y)));
 		});
 		direction->SetSnapPoints(5, 5, 2);
 		AddComponent(direction);
@@ -114,7 +114,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 	};
 	
 	{
-		auto *label = new ui::Label(ui::Point(4, 1), ui::Point(Size.X-8, 22), "Settings");
+		auto *label = new ui::Label(ui::Point(4, 1), ui::Point(Size.X-8, 22), "Настройки");
 		label->SetTextColour(style::Colour::InformationTitle);
 		label->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 		label->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
@@ -226,7 +226,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		if (addPreview)
 		{
 			textbox->Size.X -= 20;
-			preview = new ui::Button(ui::Point(Size.X-31, currentY), ui::Point(16, 16), "", "Preview");
+			preview = new ui::Button(ui::Point(Size.X-31, currentY), ui::Point(16, 16), "", "Просмотр");
 			scrollPanel->AddChild(preview);
 		}
 		auto *label = new ui::Label(ui::Point(8, currentY), ui::Point(Size.X-105, 16), info);
@@ -237,101 +237,101 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		return std::make_pair(textbox, preview);
 	};
 
-	heatSimulation = addCheckbox(0, "Heat simulation \bgIntroduced in version 34", "Can cause odd behaviour when disabled", [this] {
+	heatSimulation = addCheckbox(0, "Симуляция тепла \bgДобавлено в версии 34", "При отключении возможны странные эффекты", [this] {
 		c->SetHeatSimulation(heatSimulation->GetChecked());
 	});
-	newtonianGravity = addCheckbox(0, "Newtonian gravity \bgIntroduced in version 48", "May cause poor performance on older computers", [this] {
+	newtonianGravity = addCheckbox(0, "Ньютоновская гравитация \bgДобавлено в версии 48", "Может снижать производительность на слабых ПК", [this] {
 		c->SetNewtonianGravity(newtonianGravity->GetChecked());
 	});
-	ambientHeatSimulation = addCheckbox(0, "Ambient heat simulation \bgIntroduced in version 50", "Can cause odd / broken behaviour with many saves", [this] {
+	ambientHeatSimulation = addCheckbox(0, "Окружающее тепло \bgДобавлено в версии 50", "Может ломать поведение во многих сохранениях", [this] {
 		c->SetAmbientHeatSimulation(ambientHeatSimulation->GetChecked());
 	});
-	waterEqualisation = addCheckbox(0, "Water equalisation \bgIntroduced in version 61", "May cause poor performance with a lot of water", [this] {
+	waterEqualisation = addCheckbox(0, "Выравнивание воды \bgДобавлено в версии 61", "Может снижать производительность при большом количестве воды", [this] {
 		c->SetWaterEqualisation(waterEqualisation->GetChecked());
 	});
-	airMode = addDropDown("Air simulation mode", {
-		{ "On", AIR_ON },
-		{ "Pressure off", AIR_PRESSUREOFF },
-		{ "Velocity off", AIR_VELOCITYOFF },
-		{ "Off", AIR_OFF },
-		{ "No update", AIR_NOUPDATE },
+	airMode = addDropDown("Режим симуляции воздуха", {
+		{ "Вкл", AIR_ON },
+		{ "Без давления", AIR_PRESSUREOFF },
+		{ "Без скорости", AIR_VELOCITYOFF },
+		{ "Выкл", AIR_OFF },
+		{ "Без обновления", AIR_NOUPDATE },
 	}, [this] {
 		c->SetAirMode(airMode->GetOption().second);
 	});
-	std::tie(ambientAirTemp, ambientAirTempPreview) = addTextboxWithPreview("Ambient air temperature", true, [this](String value, bool defocus) {
+	std::tie(ambientAirTemp, ambientAirTempPreview) = addTextboxWithPreview("Температура окружающего воздуха", true, [this](String value, bool defocus) {
 		UpdateAirTemp(value, defocus);
 	});
-	std::tie(edgePressure, edgePressurePreview) = addTextboxWithPreview("Ambient air pressure", true, [this](String value, bool defocus) {
+	std::tie(edgePressure, edgePressurePreview) = addTextboxWithPreview("Давление окружающего воздуха", true, [this](String value, bool defocus) {
 		UpdateEdgePressure(value, defocus);
 	});
 	{
-		edgeVelocityChange = new ui::Button(ui::Point(Size.X-95, currentY), ui::Point(80, 16), "Change");
+		edgeVelocityChange = new ui::Button(ui::Point(Size.X-95, currentY), ui::Point(80, 16), "Изменить");
 		scrollPanel->AddChild(edgeVelocityChange);
 		edgeVelocityChange->SetActionCallback({ [this] {
-			new DirectionSelector(ui::Point(-1, -1), 0.05f, 40, edgeVelocityX, edgeVelocityY, "Ambient air velocity", [this](float x, float y) {
+			new DirectionSelector(ui::Point(-1, -1), 0.05f, 40, edgeVelocityX, edgeVelocityY, "Скорость окружающего воздуха", [this](float x, float y) {
 				c->SetEdgeVelocityX(x);
 				c->SetEdgeVelocityY(y);
 			});
 		} });
-		auto *label = new ui::Label(ui::Point(8, currentY), ui::Point(Size.X-96, 16), "Ambient air velocity");
+		auto *label = new ui::Label(ui::Point(8, currentY), ui::Point(Size.X-96, 16), "Скорость окружающего воздуха");
 		label->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 		label->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 		scrollPanel->AddChild(label);
 		currentY+=20;
 	}
-	vorticityCoeff = addTextboxWithPreview("Vorticity confinement", false, [this](String value, bool defocus) {
+	vorticityCoeff = addTextboxWithPreview("Удержание вихрей", false, [this](String value, bool defocus) {
 		UpdateVorticityCoeff(value, defocus);
 	}).first;
-	convectionMode = addDropDown("Air heat convection mode", {
-		{ "None", AIRC_NONE },
-		{ "Legacy", AIRC_LEGACY },
+	convectionMode = addDropDown("Конвекция тепла в воздухе", {
+		{ "Нет", AIRC_NONE },
+		{ "Старый", AIRC_LEGACY },
 		{ "Boussinesq", AIRC_BOUSSINESQ },
 	}, [this] {
 		c->SetConvectionMode(convectionMode->GetOption().second);
 	});
-	gravityMode = addDropDown("Gravity simulation mode", {
-		{ "Vertical", GRAV_VERTICAL },
-		{ "Off", GRAV_OFF },
-		{ "Radial", GRAV_RADIAL },
-		{ "Custom", GRAV_CUSTOM },
+	gravityMode = addDropDown("Режим симуляции гравитации", {
+		{ "Вертикальная", GRAV_VERTICAL },
+		{ "Выкл", GRAV_OFF },
+		{ "Радиальная", GRAV_RADIAL },
+		{ "Своя", GRAV_CUSTOM },
 	}, [this] {
 		c->SetGravityMode(gravityMode->GetOption().second);
 		if (gravityMode->GetOption().second == 3)
 		{
-			new DirectionSelector(ui::Point(-1, -1), 0.05f, 40, customGravityX, customGravityY, "Custom Gravity", [this](float x, float y) {
+			new DirectionSelector(ui::Point(-1, -1), 0.05f, 40, customGravityX, customGravityY, "Своя гравитация", [this](float x, float y) {
 				c->SetCustomGravityX(x);
 				c->SetCustomGravityY(y);
 			});
 		}
 	});
-	edgeMode = addDropDown("Edge mode", {
-		{ "Void", EDGE_VOID },
-		{ "Solid", EDGE_SOLID },
-		{ "Loop", EDGE_LOOP },
+	edgeMode = addDropDown("Режим границ", {
+		{ "Пустота", EDGE_VOID },
+		{ "Твёрдые", EDGE_SOLID },
+		{ "Петля", EDGE_LOOP },
 	}, [this] {
 		c->SetEdgeMode(edgeMode->GetOption().second);
 	});
-	temperatureScale = addDropDown("Temperature scale", {
-		{ "Kelvin", TEMPSCALE_KELVIN },
-		{ "Celsius", TEMPSCALE_CELSIUS },
-		{ "Fahrenheit", TEMPSCALE_FAHRENHEIT },
+	temperatureScale = addDropDown("Шкала температуры", {
+		{ "Кельвин", TEMPSCALE_KELVIN },
+		{ "Цельсий", TEMPSCALE_CELSIUS },
+		{ "Фаренгейт", TEMPSCALE_FAHRENHEIT },
 	}, [this] {
 		c->SetTemperatureScale(TempScale(temperatureScale->GetOption().second));
 	});
 	addSeparator();
-	std::tie(fpsLimit, fpsLimitText) = addLimitDropDown("Simulation framerate cap", {
-		{ "Exact", fpsLimitDropdownExact },
-		{ "Uncapped", fpsLimitDropdownUncapped },
+	std::tie(fpsLimit, fpsLimitText) = addLimitDropDown("Ограничение FPS симуляции", {
+		{ "Точное", fpsLimitDropdownExact },
+		{ "Без ограничения", fpsLimitDropdownUncapped },
 	}, [this](bool defocus) {
 		UpdateFpsLimit(defocus);
 	});
-	std::tie(drawLimit, drawLimitText) = addLimitDropDown("Rendering framerate cap", {
-		{ "Exact", drawLimitDropdownExact },
-		{ "Follow display", drawLimitDropdownFollowDisplay },
+	std::tie(drawLimit, drawLimitText) = addLimitDropDown("Ограничение FPS отрисовки", {
+		{ "Точное", drawLimitDropdownExact },
+		{ "Как у экрана", drawLimitDropdownFollowDisplay },
 	}, [this](bool defocus) {
 		UpdateDrawLimit(defocus);
 	});
-	addButtonWithLabel("Reset", " - Set both limits to sane defaults", [this]{
+	addButtonWithLabel("Сброс", " — сбросить оба лимита к нормальным значениям", [this]{
 		c->SetFpsLimit(DefaultFpsLimit);
 		c->SetDrawLimit(DefaultDrawLimit);
 	});
@@ -355,62 +355,62 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		while (desktopWidth >= GetGraphics()->Size().X * scaleIndex && desktopHeight >= GetGraphics()->Size().Y * scaleIndex);
 		if (!currentScaleValid)
 		{
-			options.push_back({ "current", currentScale });
+			options.push_back({ "текущий", currentScale });
 		}
-		scale = addDropDown("Window scale factor for larger screens", options, [this] {
+		scale = addDropDown("Масштаб окна для больших экранов", options, [this] {
 			c->SetScale(scale->GetOption().second);
 		});
 	}
 	if (FORCE_WINDOW_FRAME_OPS == forceWindowFrameOpsNone)
 	{
-		resizable = addCheckbox(0, "Resizable \bg- allow resizing and maximizing window", "", [this] {
+		resizable = addCheckbox(0, "Изменяемый размер \bg— разрешить изменение и развёртывание окна", "", [this] {
 			c->SetResizable(resizable->GetChecked());
 		});
-		fullscreen = addCheckbox(0, "Fullscreen \bg- fill the entire screen", "", [this] {
+		fullscreen = addCheckbox(0, "Полный экран \bg— на весь экран", "", [this] {
 			c->SetFullscreen(fullscreen->GetChecked());
 		});
-		changeResolution = addCheckbox(1, "Set optimal screen resolution", "", [this] {
+		changeResolution = addCheckbox(1, "Оптимальное разрешение экрана", "", [this] {
 			c->SetChangeResolution(changeResolution->GetChecked());
 		});
-		forceIntegerScaling = addCheckbox(1, "Force integer scaling \bg- less blurry", "", [this] {
+		forceIntegerScaling = addCheckbox(1, "Целочисленное масштабирование \bg— менее размыто", "", [this] {
 			c->SetForceIntegerScaling(forceIntegerScaling->GetChecked());
 		});
 	}
-	blurryScaling = addCheckbox(0, "Blurry scaling \bg- more blurry, better on very big screens", "", [this] {
+	blurryScaling = addCheckbox(0, "Размытое масштабирование \bg— более размыто, лучше на очень больших экранах", "", [this] {
 		c->SetBlurryScaling(blurryScaling->GetChecked());
 	});
 	addSeparator();
 	if (ALLOW_QUIT)
 	{
-		fastquit = addCheckbox(0, "Fast quit", "Always exit completely when hitting close", [this] {
+		fastquit = addCheckbox(0, "Быстрый выход", "Всегда полностью выходить при закрытии", [this] {
 			c->SetFastQuit(fastquit->GetChecked());
 		});
-		globalQuit = addCheckbox(0, "Global quit shortcut", "Ctrl+q works everywhere", [this] {
+		globalQuit = addCheckbox(0, "Глобальная горячая клавиша выхода", "Ctrl+Q работает везде", [this] {
 			c->SetGlobalQuit(globalQuit->GetChecked());
 		});
 	}
-	showAvatars = addCheckbox(0, "Show avatars", "Disable if you have a slow connection", [this] {
+	showAvatars = addCheckbox(0, "Показывать аватары", "Отключите при медленном соединении", [this] {
 		c->SetShowAvatars(showAvatars->GetChecked());
 	});
-	momentumScroll = addCheckbox(0, "Momentum (old) scrolling", "Accelerating instead of step scroll", [this] {
+	momentumScroll = addCheckbox(0, "Инерционная (старая) прокрутка", "Плавное ускорение вместо пошаговой прокрутки", [this] {
 		c->SetMomentumScroll(momentumScroll->GetChecked());
 	});
-	mouseClickRequired = addCheckbox(0, "Sticky categories", "Switch between categories by clicking", [this] {
+	mouseClickRequired = addCheckbox(0, "Фиксированные категории", "Переключать категории только кликом", [this] {
 		c->SetMouseClickrequired(mouseClickRequired->GetChecked());
 	});
-	includePressure = addCheckbox(0, "Include pressure", "When saving, copying, stamping, etc.", [this] {
+	includePressure = addCheckbox(0, "Включать давление", "При сохранении, копировании, штампах и т.д.", [this] {
 		c->SetIncludePressure(includePressure->GetChecked());
 	});
-	perfectCircle = addCheckbox(0, "Perfect circle brush", "Better circle brush, without incorrect points on edges", [this] {
+	perfectCircle = addCheckbox(0, "Идеальная круглая кисть", "Лучшая круглая кисть без лишних точек по краям", [this] {
 		c->SetPerfectCircle(perfectCircle->GetChecked());
 	});
-	graveExitsConsole = addCheckbox(0, "Key under Esc exits console", "Disable if that key is 0 on your keyboard", [this] {
+	graveExitsConsole = addCheckbox(0, "Клавиша под Esc закрывает консоль", "Отключите, если на вашей клавиатуре это 0", [this] {
 		c->SetGraveExitsConsole(graveExitsConsole->GetChecked());
 	});
 	if constexpr (PLATFORM_CLIPBOARD)
 	{
 		auto indent = 0;
-		nativeClipoard = addCheckbox(indent, "Use platform clipboard", "Allows copying and pasting across TPT instances", [this] {
+		nativeClipoard = addCheckbox(indent, "Системный буфер обмена", "Копирование и вставка между экземплярами TPT", [this] {
 			c->SetNativeClipoard(nativeClipoard->GetChecked());
 		});
 		currentY -= 4; // temporarily undo the currentY += 4 at the end of addCheckbox
@@ -420,14 +420,14 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		}
 		currentY += 4; // and then undo the undo
 	}
-	threadedRendering = addCheckbox(0, "Separate rendering thread", "May increase framerate when fancy effects are in use", [this] {
+	threadedRendering = addCheckbox(0, "Отдельный поток отрисовки", "Может увеличить FPS при сложных эффектах", [this] {
 		c->SetThreadedRendering(threadedRendering->GetChecked());
 	});
-	decoSpace = addDropDown("Colour space used by decoration tools", {
+	decoSpace = addDropDown("Цветовое пространство инструментов декора", {
 		{ "sRGB", DECOSPACE_SRGB },
-		{ "Linear", DECOSPACE_LINEAR },
-		{ "Gamma 2.2", DECOSPACE_GAMMA22 },
-		{ "Gamma 1.8", DECOSPACE_GAMMA18 },
+		{ "Линейное", DECOSPACE_LINEAR },
+		{ "Гамма 2.2", DECOSPACE_GAMMA22 },
+		{ "Гамма 1.8", DECOSPACE_GAMMA18 },
 	}, [this] {
 		c->SetDecoSpace(decoSpace->GetOption().second);
 	});
@@ -435,7 +435,7 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 	currentY += 4;
 	if constexpr (ALLOW_DATA_FOLDER)
 	{
-		auto *dataFolderButton = new ui::Button(ui::Point(10, currentY), ui::Point(90, 16), "Open data folder");
+		auto *dataFolderButton = new ui::Button(ui::Point(10, currentY), ui::Point(90, 16), "Открыть папку данных");
 		dataFolderButton->SetActionCallback({ [] {
 			ByteString cwd = Platform::GetCwd();
 			if (!cwd.empty())
@@ -450,25 +450,25 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		scrollPanel->AddChild(dataFolderButton);
 		if constexpr (SHARED_DATA_FOLDER)
 		{
-			auto *migrationButton = new ui::Button(ui::Point(Size.X - 178, currentY), ui::Point(163, 16), "Migrate to shared data directory");
+			auto *migrationButton = new ui::Button(ui::Point(Size.X - 178, currentY), ui::Point(163, 16), "Перенести в общую папку данных");
 			migrationButton->SetActionCallback({ [] {
 				ByteString from = Platform::originalCwd;
 				ByteString to = Platform::sharedCwd;
-				new ConfirmPrompt("Do Migration?", "This will migrate all stamps, saves, and scripts from\n\bt" + from.FromUtf8() + "\bw\nto the shared data directory at\n\bt" + to.FromUtf8() + "\bw\n\n" + "Files that already exist will not be overwritten.", { [from, to]() {
+				new ConfirmPrompt("Выполнить перенос?", "Будут перенесены все штампы, сохранения и скрипты из\n\bt" + from.FromUtf8() + "\bw\nв общую папку данных:\n\bt" + to.FromUtf8() + "\bw\n\n" + "Существующие файлы не будут перезаписаны.", { [from, to]() {
 					String ret = Client::Ref().DoMigration(from, to);
-					new InformationMessage("Migration Complete", ret, false);
+					new InformationMessage("Перенос завершён", ret, false);
 				} });
 			} });
 			scrollPanel->AddChild(migrationButton);
 		}
 		currentY += 26;
 	}
-	String autoStartupRequestNote = "Done once at startup";
+	String autoStartupRequestNote = "При запуске один раз";
 	if (!IGNORE_UPDATES)
 	{
-		autoStartupRequestNote += ", also checks for updates";
+		autoStartupRequestNote += ", также проверяет обновления";
 	}
-	autoStartupRequest = addCheckbox(0, "Fetch the message of the day and notifications", autoStartupRequestNote, [this] {
+	autoStartupRequest = addCheckbox(0, "Загружать сообщение дня и уведомления", autoStartupRequestNote, [this] {
 		auto checked = autoStartupRequest->GetChecked();
 		if (checked)
 		{
@@ -476,15 +476,15 @@ OptionsView::OptionsView() : ui::Window(ui::Point(-1, -1), ui::Point(320, 340))
 		}
 		c->SetAutoStartupRequest(checked);
 	});
-	startupRequestStatus = addButtonWithLabel("Fetch them now", "", []{
+	startupRequestStatus = addButtonWithLabel("Загрузить сейчас", "", []{
 		Client::Ref().BeginStartupRequest();
 	});
 	UpdateStartupRequestStatus();
-	redirectStd = addCheckbox(0, "Save errors and other messages to a file", "Developers may ask for this when trying to fix problems", [this] {
+	redirectStd = addCheckbox(0, "Сохранять ошибки и сообщения в файл", "Разработчики могут попросить это при отладке", [this] {
 		c->SetRedirectStd(redirectStd->GetChecked());
 	});
 	addSeparator();
-	addButtonWithLabel("Credits", " - Find out who contributed to TPT", []{
+	addButtonWithLabel("Авторы", " — кто участвовал в разработке TPT", []{
 		auto *credits = new Credits();
 		ui::Engine::Ref().ShowWindow(credits);
 	});
@@ -558,15 +558,15 @@ void OptionsView::UpdateStartupRequestStatus()
 	switch (Client::Ref().GetStartupRequestStatus())
 	{
 	case Client::StartupRequestStatus::notYetDone:
-		startupRequestStatus->SetText("\bg - Not yet fetched");
+		startupRequestStatus->SetText("\bg — ещё не загружено");
 		break;
 
 	case Client::StartupRequestStatus::inProgress:
-		startupRequestStatus->SetText("\bg - In progress...");
+		startupRequestStatus->SetText("\bg — загрузка...");
 		break;
 
 	case Client::StartupRequestStatus::succeeded:
-		startupRequestStatus->SetText(String::Build("\bg - OK, ", Client::Ref().GetServerNotifications().size(), " notifications fetched"));
+		startupRequestStatus->SetText(String::Build("\bg — OK, загружено уведомлений: ", Client::Ref().GetServerNotifications().size()));
 		break;
 
 	case Client::StartupRequestStatus::failed:
@@ -576,7 +576,7 @@ void OptionsView::UpdateStartupRequestStatus()
 			{
 				error = "???";
 			}
-			startupRequestStatus->SetText("\bg - Failed: " + error->FromUtf8());
+			startupRequestStatus->SetText("\bg — ошибка: " + error->FromUtf8());
 		}
 		break;
 	}

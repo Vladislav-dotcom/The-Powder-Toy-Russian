@@ -150,7 +150,7 @@ void PreviewModel::OnSaveReady()
 	}
 	catch(ParseException &e)
 	{
-		new ErrorMessage("Error", ByteString(e.what()).FromUtf8());
+		new ErrorMessage("Ошибка", ByteString(e.what()).FromUtf8());
 		canOpen = false;
 	}
 	notifySaveChanged();
@@ -241,11 +241,11 @@ void PreviewModel::Update()
 		{
 			if (favouriteSaveRequest->Favourite())
 			{
-				new ErrorMessage("Error", "Could not favourite the save: " + ByteString(ex.what()).FromUtf8());
+				new ErrorMessage("Ошибка", "Не удалось добавить в избранное: " + ByteString(ex.what()).FromUtf8());
 			}
 			else
 			{
-				new ErrorMessage("Error", "Could not unfavourite the save: " + ByteString(ex.what()).FromUtf8());
+				new ErrorMessage("Ошибка", "Не удалось удалить из избранного: " + ByteString(ex.what()).FromUtf8());
 			}
 		}
 		favouriteSaveRequest.reset();

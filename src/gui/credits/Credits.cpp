@@ -81,8 +81,8 @@ Credits::Credits():
 	};
 
 
-	addHeader("The Powder Toy is an open source project, developed by members of the community.\n"
-			"We'd like to thank everyone who contributed to our \bt{a:https://github.com/The-Powder-Toy/The-Powder-Toy|GitHub repo}\x0E:", false);
+	addHeader("The Powder Toy — проект с открытым исходным кодом, разрабатываемый сообществом.\n"
+			"Благодарим всех, кто внёс вклад в наш \bt{a:https://github.com/The-Powder-Toy/The-Powder-Toy|репозиторий на GitHub}\x0E:", false);
 
 	auto GitHub = root["GitHub"];
 	int grayscale = 255;
@@ -96,7 +96,7 @@ Credits::Credits():
 	}
 
 
-	addHeader("Staff - volunteers that run the community and keep the site running");
+	addHeader("Команда — добровольцы, которые ведут сообщество и поддерживают сайт");
 
 	auto Moderators = root["Moderators"];
 	for (auto &item : Moderators)
@@ -112,7 +112,7 @@ Credits::Credits():
 	}
 
 
-	addHeader("Former Staff", false);
+	addHeader("Бывшая команда", false);
 
 	for (auto &item : Moderators)
 	{
@@ -127,8 +127,8 @@ Credits::Credits():
 	}
 
 
-	addHeader("The following users have been credited in the intro text from the start.\n"
-			"Their contributions to the early beginnings of The Powder Toy were invaluable in shaping it into what it is today.");
+	addHeader("Следующие пользователи указаны во вступительном тексте с самого начала.\n"
+			"Их вклад в ранние годы The Powder Toy был неоценим для того, чем игра стала сегодня.");
 
 	auto OrigCredits = root["OrigCredits"];
 	for (auto &item : OrigCredits)
@@ -143,7 +143,7 @@ Credits::Credits():
 
 	scrollPanel->InnerSize = ui::Point(scrollPanel->Size.X, nextY);
 
-	auto *closeButton = new ui::Button({ 0, Size.Y - 12 }, { Size.X, 12 }, "Close");
+	auto *closeButton = new ui::Button({ 0, Size.Y - 12 }, { Size.X, 12 }, "Закрыть");
 	closeButton->SetActionCallback({
 	[this] {
 		CloseActiveWindow();

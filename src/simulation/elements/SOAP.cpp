@@ -41,7 +41,7 @@ void Element::Element_SOAP()
 
 	DefaultProperties.temp = R_TEMP - 2.0f + 273.15f;
 	HeatConduct = 29;
-	Description = "Soap. Creates bubbles, washes off deco color, and cures virus.";
+	Description = "Мыло. Создаёт пузыри, смывает декор и лечит вирус.";
 
 	Properties = TYPE_LIQUID|PROP_NEUTPENETRATE|PROP_LIFE_DEC;
 

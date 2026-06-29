@@ -9,12 +9,12 @@ void LoginModel::Login(ByteString username, ByteString password)
 {
 	if (username.Contains("@"))
 	{
-		statusText = String::Build("Use your Powder Toy account to log in, not your email. If you don't have a Powder Toy account, you can create one at ", SERVER, "/Register.html");
+		statusText = String::Build("Используйте аккаунт Powder Toy, а не email. Если аккаунта нет, создайте его на ", SERVER, "/Register.html");
 		loginStatus = loginIdle;
 		notifyStatusChanged();
 		return;
 	}
-	statusText = "Logging in...";
+	statusText = "Вход...";
 	loginStatus = loginWorking;
 	notifyStatusChanged();
 	loginRequest = std::make_unique<http::LoginRequest>(username, password);
@@ -23,7 +23,7 @@ void LoginModel::Login(ByteString username, ByteString password)
 
 void LoginModel::Logout()
 {
-	statusText = "Logging out...";
+	statusText = "Выход...";
 	loginStatus = loginWorking;
 	notifyStatusChanged();
 	logoutRequest = std::make_unique<http::LogoutRequest>();
@@ -54,7 +54,7 @@ void LoginModel::Tick()
 			{
 				client.AddServerNotification(item);
 			}
-			statusText = "Logged in";
+			statusText = "Вход выполнен";
 			loginStatus = loginSucceeded;
 		}
 		catch (const http::RequestError &ex)
@@ -72,7 +72,7 @@ void LoginModel::Tick()
 			logoutRequest->Finish();
 			auto &client = Client::Ref();
 			client.SetAuthUser(std::nullopt);
-			statusText = "Logged out";
+			statusText = "Выход выполнен";
 		}
 		catch (const http::RequestError &ex)
 		{

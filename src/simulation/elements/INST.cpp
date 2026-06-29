@@ -27,7 +27,7 @@ void Element::Element_INST()
 	Weight = 100;
 
 	HeatConduct = 251;
-	Description = "Instantly conducts, PSCN to charge, NSCN to take.";
+	Description = "Мгновенно проводит, PSCN для заряда, NSCN для разряда.";
 
 	Properties = TYPE_SOLID|PROP_LIFE_DEC;
 

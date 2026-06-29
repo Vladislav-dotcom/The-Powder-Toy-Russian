@@ -203,7 +203,7 @@ void SaveButton::Draw(const Point& screenPos)
 		g->BlendImage(tex->Data(), 255, RectSized(screenPos + ((save && save->id) ? ((space - thumbBoxSize) / 2 - Vec2{ 3, 0 }) : (space - thumbSize) / 2), tex->Size()));
 	}
 	else if (file && !file->LazyGetGameSave())
-		g->BlendText(screenPos + Vec2{ (Size.X-(Graphics::TextSize("Error loading save").X - 1))/2, (Size.Y-28)/2 }, "Error loading save", 0xB4B4B4_rgb .WithAlpha(255));
+		g->BlendText(screenPos + Vec2{ (Size.X-(Graphics::TextSize("Ошибка загрузки").X - 1))/2, (Size.Y-28)/2 }, "Ошибка загрузки", 0xB4B4B4_rgb .WithAlpha(255));
 	if(save)
 	{
 		if(save->id)
@@ -279,7 +279,7 @@ void SaveButton::OnMouseClick(int x, int y, unsigned int button)
 
 	if (file && !file->LazyGetGameSave())
 	{
-		new ErrorMessage("Error loading save", file->GetError());
+		new ErrorMessage("Ошибка загрузки", file->GetError());
 		return;
 	}
 
@@ -300,18 +300,18 @@ void SaveButton::AddContextMenu(int menuType)
 	if (menuType == 0) //Save browser
 	{
 		menu = new ContextMenu(this);
-		menu->AddItem(ContextMenuItem("Open", 0, true));
+		menu->AddItem(ContextMenuItem("Открыть", 0, true));
 		if (Client::Ref().GetAuthUser())
-			menu->AddItem(ContextMenuItem("Select", 1, true));
-		menu->AddItem(ContextMenuItem("View History", 2, true));
-		menu->AddItem(ContextMenuItem("More by this user", 3, true));
+			menu->AddItem(ContextMenuItem("Выбрать", 1, true));
+		menu->AddItem(ContextMenuItem("История", 2, true));
+		menu->AddItem(ContextMenuItem("Другие работы автора", 3, true));
 	}
 	else if (menuType == 1) //Local save browser
 	{
 		menu = new ContextMenu(this);
-		menu->AddItem(ContextMenuItem("Open", 0, true));
-		menu->AddItem(ContextMenuItem("Rename", 2, true));
-		menu->AddItem(ContextMenuItem("Delete", 3, true));
+		menu->AddItem(ContextMenuItem("Открыть", 0, true));
+		menu->AddItem(ContextMenuItem("Переименовать", 2, true));
+		menu->AddItem(ContextMenuItem("Удалить", 3, true));
 	}
 }
 

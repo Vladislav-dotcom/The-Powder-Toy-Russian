@@ -42,11 +42,11 @@ std::unique_ptr<SaveFile> LocalBrowserController::TakeSave()
 void LocalBrowserController::RemoveSelected()
 {
 	StringBuilder desc;
-	desc << "Are you sure you want to delete " << browserModel->GetSelected().size() << " stamp";
+	desc << "Вы уверены, что хотите удалить " << browserModel->GetSelected().size() << " штампов";
 	if(browserModel->GetSelected().size()>1)
-		desc << "s";
+		desc << "";
 	desc << "?";
-	new ConfirmPrompt("Delete stamps", desc.Build(), { [this] { removeSelectedC(); } });
+	new ConfirmPrompt("Удалить штампы", desc.Build(), { [this] { removeSelectedC(); } });
 }
 
 void LocalBrowserController::removeSelectedC()
@@ -61,7 +61,7 @@ void LocalBrowserController::removeSelectedC()
 		{
 			for (size_t i = 0; i < saves.size(); i++)
 			{
-				notifyStatus(String::Build("Deleting stamp [", saves[i].FromUtf8(), "] ..."));
+				notifyStatus(String::Build("Удаление штампа [", saves[i].FromUtf8(), "] ..."));
 				Client::Ref().DeleteStamp(saves[i]);
 				notifyProgress((i + 1) * 100 / saves.size());
 			}
@@ -74,17 +74,17 @@ void LocalBrowserController::removeSelectedC()
 	};
 
 	std::vector<ByteString> selected = browserModel->GetSelected();
-	new TaskWindow("Removing stamps", new RemoveSavesTask(this, selected));
+	new TaskWindow("Удаление штампов", new RemoveSavesTask(this, selected));
 }
 
 void LocalBrowserController::RenameSelected()
 {
 	ByteString save = browserModel->GetSelected()[0];
 
-	new TextPrompt("Rename stamp", "Enter a new name for the stamp:", "", "[new name]", false, { [this, save](const String &newName) {
+	new TextPrompt("Переименовать штамп", "Введите новое название штампа:", "", "[новое название]", false, { [this, save](const String &newName) {
 		if (newName.length() == 0)
 		{
-			new ErrorMessage("Error renaming stamp", "You have to specify the filename.");
+			new ErrorMessage("Ошибка переименования", "Укажите имя файла.");
 			return;
 		}
 

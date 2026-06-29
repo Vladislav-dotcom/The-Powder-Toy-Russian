@@ -32,7 +32,7 @@ void Element::Element_CRAY()
 	Weight = 100;
 
 	HeatConduct = 0;
-	Description = "Particle Ray Emitter. Creates a beam of particles set by its ctype, with a range set by tmp.";
+	Description = "Излучатель частиц. Создаёт поток частиц заданного ctype, дальность задаётся tmp.";
 
 	Properties = TYPE_SOLID;
 	CarriesTypeIn = 1U << FIELD_CTYPE;

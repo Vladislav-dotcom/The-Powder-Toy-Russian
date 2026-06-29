@@ -32,7 +32,7 @@ void Element::Element_PROT()
 	Weight = -1;
 
 	HeatConduct = 61;
-	Description = "Protons. Transfer heat to materials, and remove sparks.";
+	Description = "Протоны. Передают тепло материалам и убирают искры.";
 
 	Properties = TYPE_ENERGY;
 

@@ -30,7 +30,7 @@ void Element::Element_ARAY()
 	Weight = 100;
 
 	HeatConduct = 0;
-	Description = "Ray Emitter. Rays create points when they collide.";
+	Description = "Излучатель лучей. Лучи создают точки при столкновении.";
 
 	Properties = TYPE_SOLID;
 

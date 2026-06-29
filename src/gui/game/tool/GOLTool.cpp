@@ -44,7 +44,7 @@ GOLWindow::GOLWindow(GameModel &gameModel_, int toolSelection, int rule, RGB col
 {
 	highColour.Alpha = 255;
 	lowColour.Alpha = 255;
-	ui::Label * messageLabel = new ui::Label(ui::Point(4, 5), ui::Point(Size.X-8, 14), "Edit custom GOL type");
+	ui::Label * messageLabel = new ui::Label(ui::Point(4, 5), ui::Point(Size.X-8, 14), "Редактирование своего типа GOL");
 	messageLabel->SetTextColour(style::Colour::InformationTitle);
 	messageLabel->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	messageLabel->Appearance.VerticalAlign = ui::Appearance::AlignTop;
@@ -65,14 +65,14 @@ GOLWindow::GOLWindow(GameModel &gameModel_, int toolSelection, int rule, RGB col
 	AddComponent(okayButton);
 	SetOkayButton(okayButton);
 
-	nameField = new ui::Textbox(ui::Point(8, 25), ui::Point(Size.X-16, 16), "", "[name]");
+	nameField = new ui::Textbox(ui::Point(8, 25), ui::Point(Size.X-16, 16), "", "[имя]");
 	nameField->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	nameField->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 	nameField->SetLimit(7);
 	AddComponent(nameField);
 	FocusComponent(nameField);
 
-	ruleField = new ui::Textbox(ui::Point(8, 46), ui::Point(Size.X-16, 16), "", "[rule]");
+	ruleField = new ui::Textbox(ui::Point(8, 46), ui::Point(Size.X-16, 16), "", "[правило]");
 	ruleField->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	ruleField->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
 	AddComponent(ruleField);
@@ -135,19 +135,19 @@ void GOLWindow::validate()
 	auto ruleString = ruleField->GetText();
 	if (!ValidateGOLName(nameString))
 	{
-		new ErrorMessage("Could not add GOL type", "Invalid name provided");
+		new ErrorMessage("Не удалось добавить тип GOL", "Указано недопустимое имя");
 		return;
 	}
 	nameString = nameString.ToUpper();
 	int rule = ParseGOLString(ruleString);
 	if (rule == -1)
 	{
-		new ErrorMessage("Could not add GOL type", "Invalid rule provided");
+		new ErrorMessage("Не удалось добавить тип GOL", "Указано недопустимое правило");
 		return;
 	}
 	if (sd.GetCustomGOLByRule(rule))
 	{
-		new ErrorMessage("Could not add GOL type", "This Custom GoL rule already exists");
+		new ErrorMessage("Не удалось добавить тип GOL", "Это пользовательское правило GoL уже существует");
 		return;
 	}
 	ruleString = SerialiseGOLRule(rule); // * Make it canonical.
@@ -161,7 +161,7 @@ void GOLWindow::validate()
 
 	if (!gameModel.AddCustomGol(ruleString, nameString, highColour.NoAlpha(), lowColour.NoAlpha()))
 	{
-		new ErrorMessage("Could not add GOL type", "Name already taken");
+		new ErrorMessage("Не удалось добавить тип GOL", "Имя уже занято");
 		return;
 	}
 

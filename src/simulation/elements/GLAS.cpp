@@ -30,7 +30,7 @@ void Element::Element_GLAS()
 	Weight = 100;
 
 	HeatConduct = 150;
-	Description = "Glass. Meltable. Shatters under pressure, and refracts photons.";
+	Description = "Стекло. Плавится. Разрушается под давлением и преломляет фотоны.";
 
 	Properties = TYPE_SOLID | PROP_NEUTPASS | PROP_PHOTPASS | PROP_HOT_GLOW | PROP_SPARKSETTLE;
 

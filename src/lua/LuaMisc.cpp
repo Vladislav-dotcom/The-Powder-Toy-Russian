@@ -31,13 +31,13 @@ static int installScriptManager(lua_State *L)
 	lsi->AssertInterfaceEvent();
 	if (lsi->scriptManagerDownload)
 	{
-		new ErrorMessage("Script download", "A script download is already pending");
+		new ErrorMessage("Загрузка скрипта", "Загрузка скрипта уже выполняется");
 		return 0;
 	}
 	lsi->gameController->HideConsole();
 	if (ui::Engine::Ref().GetWindow() != lsi->gameController->GetView())
 	{
-		new ErrorMessage("Script download", "You must run this function from the console");
+		new ErrorMessage("Загрузка скрипта", "Эту функцию нужно вызывать из консоли");
 		return 0;
 	}
 	lsi->scriptManagerDownload = std::make_unique<http::Request>(format::Url{ "https://starcatcher.us/scripts/main.lua", {{ "get", "1" }} }.ToByteString());
@@ -74,15 +74,15 @@ void LuaMisc::Tick(lua_State *L)
 		auto complete = [](Status status) {
 			if (std::get_if<Status::Ok>(&status.value))
 			{
-				new InformationMessage("Install script manager", "Script manager successfully installed", false);
+				new InformationMessage("Установка менеджера скриптов", "Менеджер скриптов успешно установлен", false);
 			}
 			if (auto *requestFailed = std::get_if<Status::GetFailed>(&status.value))
 			{
-				new ErrorMessage("Install script manager", "Failed to get script manager: " + requestFailed->error);
+				new ErrorMessage("Установка менеджера скриптов", "Не удалось получить менеджер скриптов: " + requestFailed->error);
 			}
 			if (auto *runFailed = std::get_if<Status::RunFailed>(&status.value))
 			{
-				new ErrorMessage("Install script manager", "Failed to run script manager: " + runFailed->error);
+				new ErrorMessage("Установка менеджера скриптов", "Не удалось запустить менеджер скриптов: " + runFailed->error);
 			}
 		};
 		try
