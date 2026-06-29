@@ -23,12 +23,9 @@ meson compile
 
 Exe: `build-release\powder.exe`
 
-**Требуется:** Visual Studio (Desktop C++) или MSYS2 UCRT64 с g++. На машине без C++ компилятора сборка не запустится.
+**Требуется:** Visual Studio (Desktop C++) или MSYS2 UCRT64 с g++. На этой машине компилятор не установлен — сборка не выполнена.
 
-## Скрипты перевода
-
-- `scripts/element_translations.py` — словарь описаний элементов
-- `scripts/apply_element_translations.py` — применение переводов
+Локальные скрипты перевода (не в git): `scripts/element_translations.py`, `scripts/apply_element_translations.py`
 
 ## Переведённые GUI-файлы
 
