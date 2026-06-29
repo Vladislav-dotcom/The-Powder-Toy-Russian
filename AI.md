@@ -15,8 +15,10 @@
 ## Сборка (Windows, release static)
 
 ```powershell
-meson setup -Dbuildtype=release -Dstatic=prebuilt -Db_vscrt=static_from_buildtype `
-  -Dapp_name="The Powder Toy — Русская версия" build-release
+# В cmd с окружением VS (или одна строка через cmd /c):
+call "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat"
+cd /d d:\SERVERS\The-Powder-Toy
+meson setup -Dbuildtype=release -Dstatic=prebuilt -Db_vscrt=static_from_buildtype -Dapp_name=The-Powder-Toy-Russian build-release
 cd build-release
 meson compile
 ```
@@ -33,7 +35,9 @@ Workflow `build` собирает только **Windows + macOS** (`CI_ONLY_PLA
 - Windows: `powder-dev-x86_64-windows-mingw.exe` (и варианты msvc)
 - macOS: `powder-dev-x86_64-darwin-macos.dmg`, `powder-dev-aarch64-darwin-macos.dmg`
 
-Запуск: Actions → build → Run workflow → ветка `russian`.
+Локальные скрипты перевода (не в git): `scripts/element_translations.py`, `scripts/apply_element_translations.py`
+
+**Кодировка:** `String.h` — литералы через `FromUtf8()`; MSVC — флаг `/utf-8` в `meson.build`.
 
 ## Переведённые GUI-файлы
 

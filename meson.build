@@ -413,6 +413,7 @@ endif
 
 if cpp_compiler.get_argument_syntax() == 'msvc' and cpp_compiler.get_id() not in [ 'clang-cl' ]
 	project_cpp_args += [
+		'/utf-8',
 		'/wd4834',
 		'/wd4100',
 	]
