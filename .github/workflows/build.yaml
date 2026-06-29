@@ -45,6 +45,7 @@ jobs:
         env:
           PUBLISH_HOSTPORT: ${{ vars.STARCATCHER_PUBLISH_HOSTPORT }}
           GITHUB_REF: ${{ github.ref }}
+          CI_ONLY_PLATFORMS: windows,darwin
       - if: steps.prepare.outputs.do_publish == 'yes'
         run: bash -c './.github/starcatcher-publish.sh'
         env:

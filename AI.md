@@ -25,7 +25,15 @@ Exe: `build-release\powder.exe`
 
 **Требуется:** Visual Studio (Desktop C++) или MSYS2 UCRT64 с g++. На этой машине компилятор не установлен — сборка не выполнена.
 
-Локальные скрипты перевода (не в git): `scripts/element_translations.py`, `scripts/apply_element_translations.py`
+## CI (GitHub Actions)
+
+Workflow `build` собирает только **Windows + macOS** (`CI_ONLY_PLATFORMS=windows,darwin`).
+
+Артефакты после успешного run:
+- Windows: `powder-dev-x86_64-windows-mingw.exe` (и варианты msvc)
+- macOS: `powder-dev-x86_64-darwin-macos.dmg`, `powder-dev-aarch64-darwin-macos.dmg`
+
+Запуск: Actions → build → Run workflow → ветка `russian`.
 
 ## Переведённые GUI-файлы
 

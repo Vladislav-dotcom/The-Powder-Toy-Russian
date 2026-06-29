@@ -8,6 +8,8 @@ import sys
 ref = os.getenv('GITHUB_REF')
 event_name = os.getenv('GITHUB_EVENT_NAME')
 publish_hostport = os.getenv('PUBLISH_HOSTPORT')
+ci_only_platforms = os.getenv('CI_ONLY_PLATFORMS', '')
+allowed_platforms = set(ci_only_platforms.split(',')) if ci_only_platforms else None
 
 def set_output(key, value):
 	with open(os.getenv('GITHUB_OUTPUT'), 'a') as f:
@@ -193,6 +195,8 @@ for        arch,     platform,         libc,   statdyn, bplatform,         runso
 	(  'wasm32', 'emscripten', 'emscripten',  'static',   'linux', 'ubuntu-22.04', '.tar',         'check',      None,         None,                     None,   'debug',        0, False ), # priority = 0: rarely used debug build
 	(  'wasm32', 'emscripten', 'emscripten',  'static',   'linux', 'ubuntu-22.04', '.tar',       'publish','.wasm.dbg','emscripten',      'wasm32-ems-static', 'release',       10, False ), # TODO: enable lint once emscripten ships clang-tidy
 ]:
+	if allowed_platforms and platform not in allowed_platforms:
+		continue
 	if priority < do_priority:
 		continue
 	job_name = f'build'
